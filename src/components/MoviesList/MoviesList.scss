@@ -2,11 +2,14 @@
   display: flex;
   column-gap: 40px;
   flex-wrap: wrap;
+  gap: 35px;
 
   .movie {
     display: flex;
     width: 454px;
     column-gap: 20px;
+
+    box-shadow: (4px 4px 12px rgba(0, 0, 0, 0.15));
 
   }
 }
