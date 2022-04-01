@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 
-import { Film } from '../../types/app';
+import { MovieType } from '../../types/app';
 import { MoviesList } from '../MoviesList';
+import './App.scss';
 
 type AppState = {
-  films: Film[];
+  movies: MovieType[];
 };
 
 interface AppProps {}
 
 export default class App extends Component<AppProps | AppState> {
   state = {
-    films: [
+    movies: [
       {
         name: 'The way back',
         id: '1',
@@ -23,7 +24,7 @@ export default class App extends Component<AppProps | AppState> {
       },
       {
         name: 'The way back',
-        id: '1',
+        id: '2',
         genres: ['Action', 'Drama'],
         realise: new Date('March 5, 2020'),
         poster: 'poster',
@@ -32,7 +33,7 @@ export default class App extends Component<AppProps | AppState> {
       },
       {
         name: 'The way back',
-        id: '1',
+        id: '3',
         genres: ['Action', 'Drama'],
         realise: new Date('March 5, 2020'),
         poster: 'poster',
@@ -43,6 +44,10 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   render() {
-    return <MoviesList />;
+    return (
+      <div className="content">
+        <MoviesList movies={this.state.movies} />
+      </div>
+    );
   }
 }

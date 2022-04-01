@@ -1,4 +1,4 @@
-export interface Film {
+export interface MovieType {
   name: string;
   id: string;
   genres: string[];
