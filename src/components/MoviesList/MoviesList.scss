@@ -1,0 +1,12 @@
+.list {
+  display: flex;
+  column-gap: 40px;
+  flex-wrap: wrap;
+
+  .movie {
+    display: flex;
+    width: 454px;
+    column-gap: 20px;
+
+  }
+}

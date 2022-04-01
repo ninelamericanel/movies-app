@@ -1,9 +1,25 @@
 import React from 'react';
 
-interface MoviesListProps {}
+import { MovieType } from '../../types/app';
+import { Movie } from '../Movie';
 
-const MoviesList: React.FC<MoviesListProps> = () => {
-  return <h1>sss</h1>;
+import './MoviesList.scss';
+
+interface MoviesListProps {
+  movies: MovieType[];
+}
+
+const MoviesList: React.FC<MoviesListProps> = ({ movies }) => {
+  const elements = movies.map((movie) => {
+    const { id } = movie;
+    return (
+      <li className="movie" key={id}>
+        <Movie movie={movie} />
+      </li>
+    );
+  });
+
+  return <ul className="list">{elements}</ul>;
 };
 
 export default MoviesList;
