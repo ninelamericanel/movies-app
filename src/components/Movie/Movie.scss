@@ -1,0 +1,45 @@
+$fontText: 12px;
+
+.movie__poster {
+  width: 183px;
+  height: 281px;
+}
+
+.movie__info {
+  padding-top: 12px;
+
+  .movie__title {
+    font-size: 20px;
+    line-height: 28px;
+
+    margin-bottom: 7px;
+  }
+
+  .movie__genres {
+    display: flex;
+
+    margin-bottom: 10px;
+
+    .movie__genre {
+      font-size: $fontText;
+      line-height: 15px;
+      color: rgba(0, 0, 0, 0.65);
+      padding: 3px;
+      margin-right: 8px;
+
+      border: 1px solid rgba(217, 217, 217, 1);
+      border-radius: 2px;
+    }
+  }
+
+  .movie__realise {
+    font-size: $fontText;
+    color: #827E7E;
+
+    margin-bottom: 7px;
+  }
+
+  .movie__description {
+    line-height: 22px;
+  }
+}
