@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { MovieType } from '../../types/app';
 import { MoviesList } from '../MoviesList';
 import './App.scss';
+import movieService from '../../services/movieService';
 
 type AppState = {
   movies: MovieType[];
@@ -10,40 +11,46 @@ type AppState = {
 
 interface AppProps {}
 
+type TruncateTextFunc = (text: string) => string;
+
 export default class App extends Component<AppProps | AppState> {
-  state = {
-    movies: [
-      {
-        name: 'The way back',
-        id: '1',
-        genres: ['Action', 'Drama'],
-        realise: new Date('March 5, 2020'),
-        poster: 'poster',
-        description:
-          'A former basketball all-star, who has lost his wife and family foundation in a struggle with addiction attempts to regain his soul  and salvation by becoming the coach of a disparate ethnically mixed high ...',
-      },
-      {
-        name: 'The way back',
-        id: '2',
-        genres: ['Action', 'Drama'],
-        realise: new Date('March 5, 2020'),
-        poster: 'poster',
-        description:
-          'A former basketball all-star, who has lost his wife and family foundation in a struggle with addiction attempts to regain his soul  and salvation by becoming the coach of a disparate ethnically mixed high ...',
-      },
-      {
-        name: 'The way back',
-        id: '3',
-        genres: ['Action', 'Drama'],
-        realise: new Date('March 5, 2020'),
-        poster: 'poster',
-        description:
-          'A former basketball all-star, who has lost his wife and family foundation in a struggle with addiction attempts to regain his soul  and salvation by becoming the coach of a disparate ethnically mixed high ...',
-      },
-    ],
+  service = new movieService();
+
+  state: AppState = {
+    movies: [],
+  };
+
+  componentDidMount() {
+    this.service.getMovies('return').then((arrayOfMovies) => {
+      let arr = arrayOfMovies.map((movie: any) => {
+        return {
+          name: movie.title,
+          id: movie.id,
+          // realise: new Date(),
+          poster: `https://image.tmdb.org/t/p/w200${movie.poster_path}`,
+          description: this.truncateText(movie.overview),
+          genres: ['Action', 'Drama'],
+        };
+      });
+      this.setState({
+        movies: arr,
+      });
+    });
+  }
+
+  truncateText: TruncateTextFunc = (text) => {
+    const maxLength = 100;
+    if (text.length >= maxLength) {
+      return text
+        .slice(0, maxLength)
+        .trim()
+        .replace(/\W*\s(\S)*$/, '...');
+    }
+    return text;
   };
 
   render() {
+    // this.updateMovie();
     return (
       <div className="content">
         <MoviesList movies={this.state.movies} />
