@@ -1,3 +1,13 @@
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .spinner__text {
+    font-size: 20px;
+  }
+}
+
 @keyframes ldio-a323zksey1f {
   0% { transform: rotate(0deg) }
   50% { transform: rotate(180deg) }
@@ -17,7 +27,6 @@
 .loadingio-spinner-eclipse-qka85v5szjk {
   width: 177px;
   height: 177px;
-  display: inline-block;
   overflow: hidden;
   background: #ffffff;
 }
