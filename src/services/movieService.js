@@ -8,4 +8,10 @@ export default class MovieService {
     }
     return response.json();
   };
+
+  getMovies = async (value) => {
+    return this.getResponse(value)
+      .then((res) => res.results)
+      .catch((err) => console.log(err));
+  };
 }
