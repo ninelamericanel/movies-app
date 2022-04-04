@@ -7,7 +7,9 @@
   .movie {
     display: flex;
     width: 454px;
+    height: 300px;
     column-gap: 20px;
+    overflow: hidden;
 
     box-shadow: (4px 4px 12px rgba(0, 0, 0, 0.15));
 
