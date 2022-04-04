@@ -1,12 +1,19 @@
 $fontText: 12px;
 
 .movie__poster {
-  width: 183px;
-  height: 281px;
+  width: 200px;
+  height: 300px;
+
+  .movie__poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .movie__info {
   padding-top: 12px;
+  padding-right: 20px;
 
   .movie__title {
     font-size: 20px;
