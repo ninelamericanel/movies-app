@@ -2,10 +2,12 @@ import React from 'react';
 import './ErrorComponent.scss';
 import { Alert } from 'antd';
 
-interface ErrorProps {}
+interface ErrorProps {
+  errorInfo: string;
+}
 
-const ErrorComponent: React.FC<ErrorProps> = () => {
-  return <Alert className="alert" message="ErrorComponent" description="Something wrong happen" type="error" />;
+const ErrorComponent: React.FC<ErrorProps> = ({ errorInfo }) => {
+  return <Alert className="alert" message="Error" description={errorInfo} type="error" />;
 };
 
 export default ErrorComponent;
