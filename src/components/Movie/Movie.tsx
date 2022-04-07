@@ -15,11 +15,11 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
     </p>
   ));
 
+  const srcPoster = poster ? <img src={poster} title={name}></img> : null;
+
   return (
     <>
-      <div className="movie__poster">
-        <img src={poster} title={name}></img>
-      </div>
+      <div className="movie__poster">{srcPoster}</div>
       <div className="movie__info">
         <h5 className="movie__title">{name}</h5>
         <p className="movie__realise">{release}</p>

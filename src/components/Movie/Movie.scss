@@ -3,6 +3,10 @@ $fontText: 12px;
 .movie__poster {
   width: 200px;
   height: 300px;
+  flex-shrink: 0;
+
+  background: no-repeat url("magnifier.svg") center;
+
 
   .movie__poster img {
     width: 100%;
