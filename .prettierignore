@@ -2,3 +2,6 @@ node_modules
 *.css
 *.map
 .husky
+/src/serviceWorkerRegistration.ts
+/src/sw.js
+build

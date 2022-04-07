@@ -5,9 +5,12 @@ export default class MovieService {
 
   getResponse = async (value) => {
     const response = await fetch(`${this.url}/search/movie?api_key=${this.api_key}&query=${value}`);
+
+    console.log(response);
     if (!response.ok) {
       throw new Error(`Something wrong happen! Code of Error: ${response.status}`);
     }
+
     return response.json();
   };
 

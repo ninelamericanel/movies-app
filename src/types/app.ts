@@ -2,7 +2,7 @@ export interface MovieType {
   name: string;
   id: string;
   genres: string[];
-  realise: Date;
+  release: string | null;
   description: string;
   poster: string;
 }
