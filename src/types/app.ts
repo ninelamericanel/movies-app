@@ -4,5 +4,5 @@ export interface MovieType {
   genres: string[];
   release: string | null;
   description: string;
-  poster: string;
+  poster: string | null;
 }
