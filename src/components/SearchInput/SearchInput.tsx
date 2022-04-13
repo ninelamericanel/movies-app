@@ -11,7 +11,8 @@ interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({ setValueToSearch }) => {
   const handleChange = debounce((event) => {
     const { target } = event;
-    setValueToSearch(target.value as HTMLButtonElement);
+    const value = target.value;
+    setValueToSearch(value.trim());
   }, 500);
   return <input type="text" placeholder="Type to search..." className="input" onChange={handleChange}></input>;
 };
