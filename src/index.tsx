@@ -11,8 +11,6 @@ root.render(<App />);
 if (navigator.serviceWorker) {
   navigator.serviceWorker
     .register('service-worker.js')
-    .then((res) => console.log(res))
-    .catch((err) => console.log('lol' + err));
-} else {
-  console.log('Бля');
+    .then((res) => res)
+    .catch((err) => err);
 }
