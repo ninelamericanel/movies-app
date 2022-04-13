@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { MoviesList } from '../MoviesList';
 import './App.scss';
-import movieService from '../../services/movieService';
 import { SearchInput } from '../SearchInput';
 
 type AppState = {
@@ -14,8 +13,6 @@ interface AppProps {}
 export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
 
 export default class App extends Component<AppProps | AppState> {
-  service = new movieService();
-
   state: AppState = {
     search: '',
   };
