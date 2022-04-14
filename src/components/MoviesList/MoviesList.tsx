@@ -47,6 +47,7 @@ export type CheckEmptyFunc = (date: string) => string | null;
 type HandleTotalResultFunc = (totalResult: number) => void;
 type HandleChangePageFunc = (page: number) => void;
 type SendRequestFunc = (value: string, page?: number) => void;
+type CatchErrorFunc = (response: any) => void;
 
 export default class MoviesList extends Component<MoviesListProps, MoviesListState> {
   service = new movieService();
@@ -76,17 +77,25 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   }
 
   sendRequest: SendRequestFunc = (value, page = 1) => {
+    this.setState({
+      error: false,
+      errorInfo: '',
+    });
     this.service
       .getMovies(value, page)
       .then(([response, totalResult]) => {
-        if (response instanceof Error) throw new Error(response.message);
-        if (response.length === 0) throw new Error('Not found');
+        this.catchError(response);
         this.onLoadMovies(response);
         this.handleTotalResult(totalResult);
       })
       .catch((error) => {
         this.onError(error.message);
       });
+  };
+
+  catchError: CatchErrorFunc = (response) => {
+    if (response instanceof Error) throw new Error(response.message);
+    if (response.length === 0) throw new Error('Not found');
   };
 
   handleTotalResult: HandleTotalResultFunc = (result) => {
