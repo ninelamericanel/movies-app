@@ -168,14 +168,11 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
         </li>
       );
     });
-    const moviesOutput = movies.length !== 0 ? elements : null;
-
-    return (
-      <>
-        {loadComponent}
-        {errorComponent}
-        <ul className="view__list list">{moviesOutput}</ul>
-        <div className="view__pagination pagination">
+    const hasData = !loading && !error && movies.length !== 0;
+    const moviesList = hasData ? (
+      <div className="main">
+        <ul className="main__list list">{elements}</ul>
+        <div className="main__pagination pagination">
           <Pagination
             onChange={(page) => {
               this.handleChangePage(page);
@@ -186,6 +183,14 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
             showSizeChanger={false}
           />
         </div>
+      </div>
+    ) : null;
+
+    return (
+      <>
+        {loadComponent}
+        {errorComponent}
+        {moviesList}
       </>
     );
   }
