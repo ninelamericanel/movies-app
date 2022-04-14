@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { format } from 'date-fns';
+import { Pagination } from 'antd';
 
 import { MovieType } from '../../types/app';
 import './MoviesList.scss';
@@ -10,8 +11,10 @@ import { Movie } from '../Movie';
 
 type MoviesListState = {
   movies: MovieType[];
+  totalResult: number;
   loading: boolean;
   error: boolean;
+  currentPage: number;
   errorInfo: string;
 };
 
@@ -41,46 +44,63 @@ export type OnLoadMoviesFunc = (movies: Response[]) => void;
 export type OnErrorFunc = (message: string) => void;
 export type CreateMovieViewFunc = (movie: Response) => MovieType;
 export type CheckEmptyFunc = (date: string) => string | null;
+type HandleTotalResultFunc = (totalResult: number) => void;
+type HandleChangePageFunc = (page: number) => void;
+type SendRequestFunc = (value: string, page?: number) => void;
 
 export default class MoviesList extends Component<MoviesListProps, MoviesListState> {
   service = new movieService();
 
   state: MoviesListState = {
     movies: [],
+    totalResult: 0,
+    currentPage: 0,
     loading: true,
     error: false,
     errorInfo: '',
   };
 
   componentDidMount() {
+    this.sendRequest(this.props.search);
+  }
+
+  componentDidUpdate(prevProps: MoviesListProps, prevState: MoviesListState): void {
     const { search } = this.props;
+    const { currentPage } = this.state;
+    if (search !== prevProps.search) {
+      this.sendRequest(search);
+    }
+    if (currentPage !== prevState.currentPage) {
+      this.sendRequest(search, currentPage);
+    }
+  }
+
+  sendRequest: SendRequestFunc = (value, page = 1) => {
     this.service
-      .getMovies(search)
-      .then((response) => {
+      .getMovies(value, page)
+      .then(([response, totalResult]) => {
         if (response instanceof Error) throw new Error(response.message);
         if (response.length === 0) throw new Error('Not found');
         this.onLoadMovies(response);
+        this.handleTotalResult(totalResult);
       })
       .catch((error) => {
         this.onError(error.message);
       });
-  }
+  };
 
-  componentDidUpdate(prevProps: MoviesListProps): void {
-    const { search } = this.props;
-    if (search !== prevProps.search) {
-      this.service
-        .getMovies(search)
-        .then((response) => {
-          if (response instanceof Error) throw new Error(response.message);
-          if (response.length === 0) throw new Error('Not found');
-          this.onLoadMovies(response);
-        })
-        .catch((error) => {
-          this.onError(error.message);
-        });
-    }
-  }
+  handleTotalResult: HandleTotalResultFunc = (result) => {
+    this.setState({
+      totalResult: result,
+    });
+  };
+
+  handleChangePage: HandleChangePageFunc = (page) => {
+    console.log(page);
+    this.setState({
+      currentPage: page,
+    });
+  };
 
   onLoadMovies: OnLoadMoviesFunc = (movies) => {
     let arr = movies.map((movie) => {
@@ -128,7 +148,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   render() {
-    const { loading, error, errorInfo, movies } = this.state;
+    const { loading, error, errorInfo, movies, totalResult } = this.state;
     const loadComponent = loading ? <Spinner /> : null;
     const errorComponent = error ? <ErrorComponent errorInfo={errorInfo} /> : null;
     const elements = movies.map((movie) => {
@@ -142,11 +162,18 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     const moviesOutput = movies.length !== 0 ? elements : null;
 
     return (
-      <ul className="list">
+      <>
         {loadComponent}
         {errorComponent}
-        {moviesOutput}
-      </ul>
+        <ul className="list">{moviesOutput}</ul>
+        <Pagination
+          onChange={(page) => {
+            this.handleChangePage(page);
+          }}
+          total={totalResult}
+          // defaultCurrent={1}
+        />
+      </>
     );
   }
 }
