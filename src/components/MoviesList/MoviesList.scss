@@ -3,26 +3,23 @@
   flex-direction: column;
   justify-content: space-around;
   row-gap: 40px;
-
 }
 
 .pagination {
-
   .ant-pagination {
-    min-width: 200px;
-    max-width: 500px;
-    margin: 0 auto;
     display: flex;
+    justify-content: center;
     column-gap: 15px;
     align-items: center;
 
     a {
       font-size: inherit;
+      cursor: pointer;
     }
 
     .ant-pagination-item-active {
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       border-radius: 4px;
       background-color: #1890FF;
       display: flex;
