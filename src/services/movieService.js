@@ -14,7 +14,7 @@ export default class MovieService {
 
   getMovies = async (value) => {
     return this.getResponse(value)
-      .then((res) => res.results)
+      .then((res) => [res.results, res.total_results])
       .catch((err) => err);
   };
 }
