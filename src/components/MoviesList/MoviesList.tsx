@@ -54,7 +54,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   state: MoviesListState = {
     movies: [],
     totalResult: 0,
-    currentPage: 0,
+    currentPage: 1,
     loading: true,
     error: false,
     errorInfo: '',
@@ -148,7 +148,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   render() {
-    const { loading, error, errorInfo, movies, totalResult } = this.state;
+    const { loading, error, errorInfo, movies, totalResult, currentPage } = this.state;
     const loadComponent = loading ? <Spinner /> : null;
     const errorComponent = error ? <ErrorComponent errorInfo={errorInfo} /> : null;
     const elements = movies.map((movie) => {
@@ -165,14 +165,18 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       <>
         {loadComponent}
         {errorComponent}
-        <ul className="list">{moviesOutput}</ul>
-        <Pagination
-          onChange={(page) => {
-            this.handleChangePage(page);
-          }}
-          total={totalResult}
-          // defaultCurrent={1}
-        />
+        <ul className="view__list list">{moviesOutput}</ul>
+        <div className="view__pagination pagination">
+          <Pagination
+            onChange={(page) => {
+              this.handleChangePage(page);
+            }}
+            total={totalResult}
+            pageSize={20}
+            current={currentPage}
+            showSizeChanger={false}
+          />
+        </div>
       </>
     );
   }
