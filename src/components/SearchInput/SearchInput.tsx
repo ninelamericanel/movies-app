@@ -2,7 +2,7 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 
 import './SearchInput.scss';
-import { SetValueToSearchFunc } from '../App/App';
+import { SetValueToSearchFunc } from 'types/app';
 
 interface SearchInputProps {
   setValueToSearch: SetValueToSearchFunc;

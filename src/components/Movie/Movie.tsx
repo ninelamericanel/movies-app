@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MovieType } from '../../types/app';
+import { MovieType } from 'types/app';
 import './Movie.scss';
 
 interface MovieProps {

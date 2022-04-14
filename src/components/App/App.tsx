@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-import { MoviesList } from '../MoviesList';
+import { MoviesList } from 'components/MoviesList';
+import { SearchInput } from 'components/SearchInput';
+import { SetValueToSearchFunc } from 'types/app';
+
 import './App.scss';
-import { SearchInput } from '../SearchInput';
 
 type AppState = {
   search: string;
 };
 
 interface AppProps {}
-
-export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
 
 export default class App extends Component<AppProps | AppState> {
   state: AppState = {

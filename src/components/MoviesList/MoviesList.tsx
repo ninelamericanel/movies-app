@@ -2,12 +2,24 @@ import React, { Component } from 'react';
 import { format } from 'date-fns';
 import { Pagination } from 'antd';
 
-import { MovieType } from '../../types/app';
+import {
+  CatchErrorFunc,
+  CheckEmptyFunc,
+  CreateMovieViewFunc,
+  HandleChangePageFunc,
+  HandleTotalResultFunc,
+  MovieType,
+  OnErrorFunc,
+  OnLoadMoviesFunc,
+  SendRequestFunc,
+  TruncateTextFunc,
+} from 'types/app';
+import movieService from 'services/movieService';
+import { Spinner } from 'components/Spinner';
+import { ErrorComponent } from 'components/ErrorComponent';
+import { Movie } from 'components/Movie';
+
 import './MoviesList.scss';
-import movieService from '../../services/movieService';
-import { Spinner } from '../Spinner';
-import { ErrorComponent } from '../ErrorComponent';
-import { Movie } from '../Movie';
 
 type MoviesListState = {
   movies: MovieType[];
@@ -18,36 +30,9 @@ type MoviesListState = {
   errorInfo: string;
 };
 
-interface Response {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
 interface MoviesListProps {
   search: string;
 }
-
-export type TruncateTextFunc = (text: string) => string;
-export type OnLoadMoviesFunc = (movies: Response[]) => void;
-export type OnErrorFunc = (message: string) => void;
-export type CreateMovieViewFunc = (movie: Response) => MovieType;
-export type CheckEmptyFunc = (date: string) => string | null;
-type HandleTotalResultFunc = (totalResult: number) => void;
-type HandleChangePageFunc = (page: number) => void;
-type SendRequestFunc = (value: string, page?: number) => void;
-type CatchErrorFunc = (response: any) => void;
 
 export default class MoviesList extends Component<MoviesListProps, MoviesListState> {
   service = new movieService();
@@ -69,6 +54,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     const { search } = this.props;
     const { currentPage } = this.state;
     if (search !== prevProps.search) {
+      console.log(search);
       this.sendRequest(search);
     }
     if (currentPage !== prevState.currentPage) {
@@ -105,7 +91,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   handleChangePage: HandleChangePageFunc = (page) => {
-    console.log(page);
     this.setState({
       currentPage: page,
     });
