@@ -29,7 +29,7 @@ export default class App extends Component<AppProps | AppState> {
     return (
       <div className="content">
         <SearchInput setValueToSearch={this.setValueToSearch} />
-        <main>{movieListOutput}</main>
+        <main className="view">{movieListOutput}</main>
       </div>
     );
   }
