@@ -1,3 +1,33 @@
+.pagination {
+
+  .ant-pagination {
+    min-width: 200px;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+
+    a {
+      font-size: inherit;
+    }
+
+    .ant-pagination-item-active {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+      background-color: #1890FF;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
 .list {
   display: flex;
   column-gap: 40px;
