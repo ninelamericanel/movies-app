@@ -1,3 +1,11 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  row-gap: 40px;
+
+}
+
 .pagination {
 
   .ant-pagination {
