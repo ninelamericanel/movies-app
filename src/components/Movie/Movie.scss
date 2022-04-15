@@ -15,16 +15,56 @@ $fontText: 12px;
   }
 }
 
+.movie__rate {
+  margin-bottom: auto;
+  .ant-rate-star {
+    font-size: 18px;
+  }
+
+  .ant-rate-star:not(:last-child) {
+    margin-right: 4px;
+  }
+}
+
 .movie__info {
   padding-top: 12px;
-  padding-right: 20px;
+  padding-right: 9px;
+  display: flex;
+  flex-direction: column;
 
-  .movie__title {
-    font-size: 20px;
-    line-height: 28px;
+  .movie__header {
+    display: flex;
+    justify-content: space-between;
+    //column-gap: 10px;
 
-    margin-bottom: 7px;
+    .movie__title {
+      max-width: 170px;
+      font-size: 20px;
+      line-height: 28px;
+
+      margin-bottom: 7px;
+    }
+
+    .movie__rating {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid red;
+      border-radius: 50%;
+
+      p {
+        //line-height: 0;
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
+      }
+    }
   }
+
+
+
 
   .movie__genres {
     display: flex;

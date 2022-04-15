@@ -54,7 +54,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     const { search } = this.props;
     const { currentPage } = this.state;
     if (search !== prevProps.search) {
-      console.log(search);
       this.sendRequest(search);
     }
     if (currentPage !== prevState.currentPage) {
