@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { MoviesList } from 'components/MoviesList';
+import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { SetValueToSearchFunc } from 'types/app';
 
@@ -28,6 +29,7 @@ export default class App extends Component<AppProps | AppState> {
     const movieListOutput = search ? <MoviesList search={search} /> : null;
     return (
       <div className="content">
+        <Tabs />
         <SearchInput setValueToSearch={this.setValueToSearch} />
         <main className="view">{movieListOutput}</main>
       </div>
