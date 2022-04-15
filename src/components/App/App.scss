@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 body {
-  height: 100vh;
+  height: 100%;
   font-family: Inter, Arial, sans-serif;
   font-size: 16px;
   color: black;
@@ -11,17 +11,19 @@ body {
     height: 100%;
   }
 
-
   .content {
     width: 1010px;
-    //height: 100%;
+    min-height: 100%;
     margin: 0 auto;
     padding: 30px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
 
-    .view {
-      height: 100%;
-    }
+  .view {
+    flex-grow: 1;
   }
 }
 
