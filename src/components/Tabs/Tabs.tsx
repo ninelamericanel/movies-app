@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import './Tabs.scss';
+
+type HandleClickFunc = (event: React.MouseEvent<HTMLElement>) => void;
 
 const Tabs: React.FC = () => {
+  const [activeButton, setActiveButton] = useState('search');
+  const handleClick: HandleClickFunc = (event) => {
+    if (event.target instanceof Element) {
+      setActiveButton(event.target.id);
+    }
+  };
+  const buttons = ['Search', 'Rated'];
+  const viewButtons = buttons.map((buttonName) => {
+    const className = buttonName.toLowerCase() === activeButton ? 'tabs__btn btn--active' : 'tabs__btn';
+    return (
+      <button key={buttonName} id={buttonName.toLowerCase()} className={className}>
+        {buttonName}
+      </button>
+    );
+  });
+
   return (
-    <div className="tabs">
-      <div className="tabs__search">
-        <p>Search</p>
-      </div>
-      <div className="tabs__rated">
-        <p>Rated</p>
-      </div>
+    <div className="tabs" onClick={handleClick}>
+      {viewButtons}
     </div>
   );
 };
