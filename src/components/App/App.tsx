@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
-import { SetValueToSearchFunc } from 'types/app';
+import { RatedMovies } from 'components/RatedMovies';
+import { SetTabFunc, SetValueToSearchFunc } from 'types/app';
 
 import './App.scss';
 
 type AppState = {
   search: string;
+  tab: string;
 };
 
 interface AppProps {}
@@ -16,6 +18,7 @@ interface AppProps {}
 export default class App extends Component<AppProps | AppState> {
   state: AppState = {
     search: '',
+    tab: 'search',
   };
 
   setValueToSearch: SetValueToSearchFunc = (value) => {
@@ -24,14 +27,21 @@ export default class App extends Component<AppProps | AppState> {
     });
   };
 
+  setTab: SetTabFunc = (tab) => {
+    this.setState({
+      tab: tab,
+    });
+  };
+
   render() {
-    const { search } = this.state;
+    const { search, tab } = this.state;
     const movieListOutput = search ? <MoviesList search={search} /> : null;
+    const viewTab = tab === 'rated' ? <RatedMovies /> : movieListOutput;
     return (
       <div className="content">
-        <Tabs />
+        <Tabs setTab={this.setTab} />
         <SearchInput setValueToSearch={this.setValueToSearch} />
-        <main className="view">{movieListOutput}</main>
+        <main className="view">{viewTab}</main>
       </div>
     );
   }

@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Tabs.scss';
+import { SetTabFunc } from 'types/app';
+
+interface TabsProps {
+  setTab: SetTabFunc;
+}
 
 type HandleClickFunc = (event: React.MouseEvent<HTMLElement>) => void;
 
-const Tabs: React.FC = () => {
+const Tabs: React.FC<TabsProps> = ({ setTab }) => {
   const [activeButton, setActiveButton] = useState('search');
   const handleClick: HandleClickFunc = (event) => {
     if (event.target instanceof Element) {
       setActiveButton(event.target.id);
     }
   };
+
+  useEffect(() => {
+    setTab(activeButton);
+  }, [activeButton]);
   const buttons = ['Search', 'Rated'];
   const viewButtons = buttons.map((buttonName) => {
     const className = buttonName.toLowerCase() === activeButton ? 'tabs__btn btn--active' : 'tabs__btn';

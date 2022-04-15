@@ -34,3 +34,4 @@ export type HandleTotalResultFunc = (totalResult: number) => void;
 export type HandleChangePageFunc = (page: number) => void;
 export type SendRequestFunc = (value: string, page?: number) => void;
 export type CatchErrorFunc = (response: any) => void;
+export type SetTabFunc = (tab: string) => void;
