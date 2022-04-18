@@ -37,10 +37,11 @@ export default class App extends Component<AppProps | AppState> {
     const { search, tab } = this.state;
     const movieListOutput = search ? <MoviesList search={search} /> : null;
     const viewTab = tab === 'rated' ? <RatedMovies /> : movieListOutput;
+    const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
     return (
       <div className="content">
         <Tabs setTab={this.setTab} />
-        <SearchInput setValueToSearch={this.setValueToSearch} />
+        {viewSearchInput}
         <main className="view">{viewTab}</main>
       </div>
     );
