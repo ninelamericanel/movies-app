@@ -21,6 +21,10 @@ export default class App extends Component<AppProps | AppState> {
     tab: 'search',
   };
 
+  componentDidMount() {
+    localStorage.setItem('myRatedMovies', JSON.stringify([]));
+  }
+
   setValueToSearch: SetValueToSearchFunc = (value) => {
     this.setState({
       search: value,
