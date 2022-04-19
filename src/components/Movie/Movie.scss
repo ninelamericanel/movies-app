@@ -45,21 +45,32 @@ $fontText: 12px;
       margin-bottom: 7px;
     }
 
-    .movie__rating {
+    .movie__popularity {
       width: 30px;
       height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 2px solid red;
       border-radius: 50%;
 
       p {
         line-height: 0;
-        //padding-left: px;
         margin: 0;
         font-size: 12px;
       }
+    }
+
+    .red {
+      border: 2px solid #E90000;
+    }
+    .orange {
+      border: 2px solid #E97E00;
+    }
+    .yellow {
+      border: 2px solid #E9D100;
+    }
+    .green {
+      border: 2px solid #66E900;
     }
   }
 

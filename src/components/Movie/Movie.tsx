@@ -36,8 +36,16 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
       return acc;
     }, {});
     const arrayOfMovies: MovieType[] = Object.values(reducer);
-    // console.log(arrayOfMovies);
     setRateMovies(arrayOfMovies);
+  };
+
+  const styleForRating = (value: number): string => {
+    let className = 'movie__popularity';
+    if (value >= 0 && value < 3) className += ' red';
+    if (value >= 3 && value < 5) className += ' orange';
+    if (value >= 5 && value < 7) className += ' yellow';
+    if (value >= 7) className += ' green';
+    return className;
   };
 
   return (
@@ -46,7 +54,7 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
       <div className="movie__info">
         <div className="movie__header">
           <h5 className="movie__title">{name}</h5>
-          <div className="movie__rating">
+          <div className={styleForRating(popularity)}>
             <p>{popularity}</p>
           </div>
         </div>
