@@ -26,6 +26,9 @@ export default class App extends Component<AppProps | AppState> {
   componentDidMount() {
     const movies = JSON.parse(localStorage.myRatedMovies || '[]');
     localStorage.setItem('myRatedMovies', JSON.stringify(movies));
+    this.setState({
+      ratedMovies: movies,
+    });
   }
 
   componentDidUpdate() {
@@ -53,7 +56,6 @@ export default class App extends Component<AppProps | AppState> {
 
   render() {
     const { search, tab, ratedMovies } = this.state;
-    console.log(ratedMovies);
     const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
     const viewTab = tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} /> : movieListOutput;
     const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
