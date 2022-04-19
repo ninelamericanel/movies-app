@@ -5,6 +5,8 @@ export interface MovieType {
   release: string | null;
   description: string;
   poster: string | null;
+  popularity: number;
+  rated: number;
 }
 
 export interface Response {
@@ -35,3 +37,4 @@ export type HandleChangePageFunc = (page: number) => void;
 export type SendRequestFunc = (value: string, page?: number) => void;
 export type CatchErrorFunc = (response: any) => void;
 export type SetTabFunc = (tab: string) => void;
+export type SetRateMoviesFunc = (array: MovieType[]) => void;
