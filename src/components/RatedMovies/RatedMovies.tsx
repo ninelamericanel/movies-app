@@ -3,32 +3,16 @@ import { Rate } from 'antd';
 
 import { MovieType } from 'types/app';
 
-interface RatedMoviesProps {}
-
-interface RatedMoviesType extends MovieType {
-  rated: number;
+interface RatedMoviesProps {
+  ratedMovies: MovieType[];
 }
 
-type RatedMoviesState = {
-  movies: RatedMoviesType[];
-};
+type RatedMoviesState = {};
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
-  state: RatedMoviesState = {
-    movies: [],
-  };
-
-  componentDidMount() {
-    const ratedMovies: any = localStorage.getItem('myRatedMovies');
-    const arr = JSON.parse(ratedMovies);
-    this.setState({
-      movies: arr,
-    });
-  }
-
   render() {
-    const { movies } = this.state;
-    const viewMovies = movies.map((item) => {
+    const { ratedMovies } = this.props;
+    const viewMovies = ratedMovies.map((item) => {
       const { description, id, name, rated, release, genres, poster } = item;
       const srcPoster = poster ? <img src={poster} title={name}></img> : null;
       const arrayGenres = genres.map((genre, i) => (
@@ -55,6 +39,6 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
       );
     });
 
-    return <div>{viewMovies}</div>;
+    return <div className="main__list list">{viewMovies}</div>;
   }
 }
