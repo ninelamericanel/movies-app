@@ -5,6 +5,8 @@ import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
 import { MovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
+import MovieService from 'services/movieService';
+import { GenresProvider, AppContextInterface } from 'genres-context/genres-context';
 
 import './App.scss';
 
@@ -12,20 +14,29 @@ type AppState = {
   search: string;
   tab: string;
   ratedMovies: MovieType[];
+  genres: [] | AppContextInterface;
 };
 
 interface AppProps {}
 
+type GetGenresFunc = () => void;
+
 export default class App extends Component<AppProps | AppState> {
+  service = new MovieService();
+
+  genres = [];
+
   state: AppState = {
     search: '',
     tab: 'search',
     ratedMovies: [],
+    genres: [],
   };
 
   componentDidMount() {
     const movies = JSON.parse(localStorage.myRatedMovies || '[]');
     localStorage.setItem('myRatedMovies', JSON.stringify(movies));
+    this.getResponseGenres();
     this.setState({
       ratedMovies: movies,
     });
@@ -35,6 +46,19 @@ export default class App extends Component<AppProps | AppState> {
     const { ratedMovies } = this.state;
     localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
   }
+
+  outputGenres = (array: []): void => {
+    this.setState({
+      genres: array,
+    });
+  };
+
+  getResponseGenres: GetGenresFunc = () => {
+    this.service
+      .getGenres()
+      .then((res) => this.outputGenres(res))
+      .catch((err) => err);
+  };
 
   setValueToSearch: SetValueToSearchFunc = (value) => {
     this.setState({
@@ -55,16 +79,19 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   render() {
-    const { search, tab, ratedMovies } = this.state;
+    const { search, tab, ratedMovies, genres } = this.state;
     const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
-    const viewTab = tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} /> : movieListOutput;
+    const viewTab =
+      tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} setRateMovies={this.setRateMovies} /> : movieListOutput;
     const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
     return (
-      <div className="content">
-        <Tabs setTab={this.setTab} />
-        {viewSearchInput}
-        <main className="view">{viewTab}</main>
-      </div>
+      <GenresProvider value={genres}>
+        <div className="content">
+          <Tabs setTab={this.setTab} />
+          {viewSearchInput}
+          <main className="view">{viewTab}</main>
+        </div>
+      </GenresProvider>
     );
   }
 }

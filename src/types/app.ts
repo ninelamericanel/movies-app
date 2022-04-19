@@ -9,6 +9,11 @@ export interface MovieType {
   rated: number;
 }
 
+export interface GenresType {
+  id: number;
+  name: string;
+}
+
 export interface Response {
   adult: boolean;
   backdrop_path: string;
