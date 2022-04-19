@@ -4,14 +4,14 @@ import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
-import { RatedMoviesType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
+import { MovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
 
 import './App.scss';
 
 type AppState = {
   search: string;
   tab: string;
-  ratedMovies: RatedMoviesType[];
+  ratedMovies: MovieType[];
 };
 
 interface AppProps {}
@@ -28,11 +28,9 @@ export default class App extends Component<AppProps | AppState> {
     localStorage.setItem('myRatedMovies', JSON.stringify(movies));
   }
 
-  componentDidUpdate(prevProps: AppProps, prevState: AppState) {
+  componentDidUpdate() {
     const { ratedMovies } = this.state;
-    if (prevState.ratedMovies.length !== ratedMovies.length) {
-      localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
-    }
+    localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
   }
 
   setValueToSearch: SetValueToSearchFunc = (value) => {
@@ -54,9 +52,10 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   render() {
-    const { search, tab } = this.state;
+    const { search, tab, ratedMovies } = this.state;
+    console.log(ratedMovies);
     const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
-    const viewTab = tab === 'rated' ? <RatedMovies /> : movieListOutput;
+    const viewTab = tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} /> : movieListOutput;
     const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
     return (
       <div className="content">

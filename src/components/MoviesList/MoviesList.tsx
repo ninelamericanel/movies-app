@@ -12,6 +12,7 @@ import {
   OnErrorFunc,
   OnLoadMoviesFunc,
   SendRequestFunc,
+  SetRateMoviesFunc,
   TruncateTextFunc,
 } from 'types/app';
 import movieService from 'services/movieService';
@@ -20,6 +21,8 @@ import { ErrorComponent } from 'components/ErrorComponent';
 import { Movie } from 'components/Movie';
 
 import './MoviesList.scss';
+
+type CheckRatedMovieFunc = (id: string) => number;
 
 type MoviesListState = {
   movies: MovieType[];
@@ -32,6 +35,7 @@ type MoviesListState = {
 
 interface MoviesListProps {
   search: string;
+  setRateMovies: SetRateMoviesFunc;
 }
 
 export default class MoviesList extends Component<MoviesListProps, MoviesListState> {
@@ -96,9 +100,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   onLoadMovies: OnLoadMoviesFunc = (movies) => {
-    let arr = movies.map((movie) => {
-      return this.createMovieView(movie);
-    });
+    let arr = movies.map((movie) => this.createMovieView(movie));
     this.setState({
       movies: arr,
       loading: false,
@@ -122,7 +124,17 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       poster: movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : null,
       description: this.truncateText(overview),
       genres: ['Action', 'Drama'],
+      popularity: movie.vote_average,
+      rated: this.checkRatedMovie(id.toString()),
     };
+  };
+
+  checkRatedMovie: CheckRatedMovieFunc = (id) => {
+    const array = JSON.parse(localStorage.myRatedMovies);
+    return array.reduce((acc: number, rateMovie: MovieType) => {
+      if (rateMovie.id === id) acc += rateMovie.rated;
+      return acc;
+    }, 0);
   };
 
   private truncateText: TruncateTextFunc = (text) => {
@@ -148,7 +160,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       const { id } = movie;
       return (
         <li className="movie" key={id}>
-          <Movie movie={movie} />
+          <Movie movie={movie} setRateMovies={this.props.setRateMovies} />
         </li>
       );
     });
