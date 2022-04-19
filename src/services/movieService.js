@@ -23,7 +23,7 @@ export default class MovieService {
 
   getGenres = async () => {
     return this.getResponseGenres()
-      .then((res) => res)
+      .then((res) => res.genres)
       .catch((err) => err);
   };
 
