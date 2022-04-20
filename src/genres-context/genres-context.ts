@@ -2,10 +2,6 @@ import React from 'react';
 
 import { GenresType } from 'types/app';
 
-export interface AppContextInterface {
-  genres: GenresType[] | [];
-}
+export type AppContextInterface = GenresType[] | [];
 
-const { Provider: GenresProvider, Consumer: GenresConsumer } = React.createContext<AppContextInterface | []>([]);
-
-export { GenresConsumer, GenresProvider };
+export const GenresContext = React.createContext<AppContextInterface | []>([]);
