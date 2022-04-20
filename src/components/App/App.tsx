@@ -83,7 +83,8 @@ export default class App extends Component<AppProps | AppState> {
     const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
     const viewTab =
       tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} setRateMovies={this.setRateMovies} /> : movieListOutput;
-    const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
+    const viewSearchInput =
+      tab === 'search' ? <SearchInput search={search} setValueToSearch={this.setValueToSearch} /> : null;
     return (
       <GenresContext.Provider value={genres}>
         <div className="content">
