@@ -11,46 +11,54 @@ interface MovieProps {
   setRateMovies: SetRateMoviesFunc;
 }
 
-interface Huinya {
-  [id: string]: MovieType;
+interface HashMapRatedMovies {
+  [id: string]: RatedMovieType;
 }
 
 type HandleChangeFunc = (value: number) => void;
 
 const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
   const { name, description, poster, release, popularity, rated, genresIds } = movie;
-  const genresContext = React.useContext(GenresContext);
-  const arrayGenres = genresContext.filter((genre: GenresType) => {
-    return genresIds.includes(genre.id);
-  });
-  const genreElements = arrayGenres.map((genre: GenresType) => {
-    return (
-      <p key={genre.id} className="movie__genre">
-        {genre.name}
-      </p>
-    );
-  });
-
+  const findGenres = (array: GenresType[]) => {
+    const moviesGenres = array.filter((genre: GenresType) => {
+      return genresIds.includes(genre.id);
+    });
+    return moviesGenres.map((genre: GenresType) => {
+      return (
+        <p key={genre.id} className="movie__genre">
+          {genre.name}
+        </p>
+      );
+    });
+  };
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
-  const handleChange: HandleChangeFunc = (value) => {
-    movie.rated = value;
-    const ratedMov: RatedMovieType = {
-      updatedUp: Date.now(),
-      ...movie,
-    };
-    const valueFromLS: any = localStorage.getItem('myRatedMovies');
-    const ratedMoviesArray = JSON.parse(valueFromLS);
-    ratedMoviesArray.push(ratedMov);
-    const reducer = ratedMoviesArray.reduce((acc: Huinya, curr: RatedMovieType) => {
+  const getRatedMoviesFromLocalStorage = (): RatedMovieType[] => {
+    const value: any = localStorage.getItem('myRatedMovies');
+    return JSON.parse(value);
+  };
+  const makeHashMapRatedMovies = (array: RatedMovieType[]): RatedMovieType[] => {
+    const reducer = array.reduce((acc: HashMapRatedMovies, curr: RatedMovieType) => {
       const id: string = curr.id;
       acc[id] = curr;
       return acc;
     }, {});
-    const arrayOfMovies: RatedMovieType[] = Object.values(reducer);
-    arrayOfMovies.sort((a, b) => (a.updatedUp < b.updatedUp ? 1 : -1));
+    return Object.values(reducer);
+  };
+  const sortArray = (array: RatedMovieType[]) => array.sort((a, b) => (a.updatedUp < b.updatedUp ? 1 : -1));
+  const createRatedMovie = (unratedMovie: MovieType): RatedMovieType => {
+    return {
+      updatedUp: Date.now(),
+      ...unratedMovie,
+    };
+  };
+  const handleChange: HandleChangeFunc = (value) => {
+    movie.rated = value;
+    const ratedMov: RatedMovieType = createRatedMovie(movie);
+    const ratedMoviesArray: RatedMovieType[] = getRatedMoviesFromLocalStorage();
+    ratedMoviesArray.push(ratedMov);
+    const arrayOfMovies: RatedMovieType[] = sortArray(makeHashMapRatedMovies(ratedMoviesArray));
     setRateMovies(arrayOfMovies);
   };
-
   const styleForRating = (value: number): string => {
     let className = 'movie__popularity';
     if (value >= 0 && value < 3) className += ' red';
@@ -71,7 +79,7 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
           </div>
         </div>
         <p className="movie__realise">{release}</p>
-        <div className="movie__genres">{genreElements}</div>
+        <div className="movie__genres">{findGenres(React.useContext(GenresContext))}</div>
         <p className="movie__description">{description}</p>
         <Rate className="movie__rate" defaultValue={rated} allowHalf count={10} onChange={handleChange} />
       </div>
