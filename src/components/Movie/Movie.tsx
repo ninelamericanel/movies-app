@@ -1,9 +1,10 @@
 import React from 'react';
 import { Rate } from 'antd';
 
-import { MovieType, SetRateMoviesFunc } from 'types/app';
+import { GenresType, MovieType, SetRateMoviesFunc } from 'types/app';
 import './Movie.scss';
 import 'antd/dist/antd.css';
+import { GenresContext } from 'genres-context/genres-context';
 
 interface MovieProps {
   movie: MovieType;
@@ -17,12 +18,19 @@ interface Huinya {
 type HandleChangeFunc = (value: number) => void;
 
 const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
-  const { name, description, poster, genres, release, popularity, rated } = movie;
-  const arrayGenres = genres.map((genre, id) => (
-    <p key={id} className="movie__genre">
-      {genre}
-    </p>
-  ));
+  console.log('output');
+  const { name, description, poster, release, popularity, rated, genresIds } = movie;
+  const genresContext = React.useContext(GenresContext);
+  const arrayGenres = genresContext.filter((genre: GenresType) => {
+    return genresIds.includes(genre.id);
+  });
+  const genreElements = arrayGenres.map((genre: GenresType) => {
+    return (
+      <p key={genre.id} className="movie__genre">
+        {genre.name}
+      </p>
+    );
+  });
 
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
   const handleChange: HandleChangeFunc = (value) => {
@@ -59,7 +67,7 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
           </div>
         </div>
         <p className="movie__realise">{release}</p>
-        <div className="movie__genres">{arrayGenres}</div>
+        <div className="movie__genres">{genreElements}</div>
         <p className="movie__description">{description}</p>
         <Rate className="movie__rate" defaultValue={rated} allowHalf count={10} onChange={handleChange} />
       </div>

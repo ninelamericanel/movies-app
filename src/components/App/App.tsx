@@ -6,7 +6,7 @@ import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
 import { MovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
 import MovieService from 'services/movieService';
-import { GenresProvider, AppContextInterface } from 'genres-context/genres-context';
+import { AppContextInterface, GenresContext } from 'genres-context/genres-context';
 
 import './App.scss';
 
@@ -85,13 +85,13 @@ export default class App extends Component<AppProps | AppState> {
       tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} setRateMovies={this.setRateMovies} /> : movieListOutput;
     const viewSearchInput = tab === 'search' ? <SearchInput setValueToSearch={this.setValueToSearch} /> : null;
     return (
-      <GenresProvider value={genres}>
+      <GenresContext.Provider value={genres}>
         <div className="content">
           <Tabs setTab={this.setTab} />
           {viewSearchInput}
           <main className="view">{viewTab}</main>
         </div>
-      </GenresProvider>
+      </GenresContext.Provider>
     );
   }
 }
