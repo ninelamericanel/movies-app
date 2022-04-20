@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rate } from 'antd';
 
-import { GenresType, MovieType, SetRateMoviesFunc } from 'types/app';
+import { GenresType, MovieType, RatedMovieType, SetRateMoviesFunc } from 'types/app';
 import './Movie.scss';
 import 'antd/dist/antd.css';
 import { GenresContext } from 'genres-context/genres-context';
@@ -34,15 +34,20 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
   const handleChange: HandleChangeFunc = (value) => {
     movie.rated = value;
-    const ratedMov: any = localStorage.getItem('myRatedMovies');
-    const arr = JSON.parse(ratedMov);
-    arr.push(movie);
-    const reducer = arr.reduce((acc: Huinya, curr: MovieType) => {
+    const ratedMov: RatedMovieType = {
+      updatedUp: Date.now(),
+      ...movie,
+    };
+    const valueFromLS: any = localStorage.getItem('myRatedMovies');
+    const ratedMoviesArray = JSON.parse(valueFromLS);
+    ratedMoviesArray.push(ratedMov);
+    const reducer = ratedMoviesArray.reduce((acc: Huinya, curr: RatedMovieType) => {
       const id: string = curr.id;
       acc[id] = curr;
       return acc;
     }, {});
-    const arrayOfMovies: MovieType[] = Object.values(reducer);
+    const arrayOfMovies: RatedMovieType[] = Object.values(reducer);
+    arrayOfMovies.sort((a, b) => (a.updatedUp < b.updatedUp ? 1 : -1));
     setRateMovies(arrayOfMovies);
   };
 
