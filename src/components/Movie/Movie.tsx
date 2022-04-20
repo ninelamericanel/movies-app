@@ -18,7 +18,6 @@ interface Huinya {
 type HandleChangeFunc = (value: number) => void;
 
 const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
-  console.log('output');
   const { name, description, poster, release, popularity, rated, genresIds } = movie;
   const genresContext = React.useContext(GenresContext);
   const arrayGenres = genresContext.filter((genre: GenresType) => {
