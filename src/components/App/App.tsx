@@ -4,7 +4,7 @@ import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
-import { MovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
+import { RatedMovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
 import MovieService from 'services/movieService';
 import { AppContextInterface, GenresContext } from 'genres-context/genres-context';
 
@@ -13,7 +13,7 @@ import './App.scss';
 type AppState = {
   search: string;
   tab: string;
-  ratedMovies: MovieType[];
+  ratedMovies: RatedMovieType[];
   genres: [] | AppContextInterface;
 };
 
