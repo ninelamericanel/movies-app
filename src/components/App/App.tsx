@@ -90,7 +90,7 @@ export default class App extends Component<AppProps | AppState> {
         <div className="content">
           <Tabs setTab={this.setTab} />
           {viewSearchInput}
-          <main className="view">{viewTab}</main>
+          <main className="main">{viewTab}</main>
         </div>
       </GenresContext.Provider>
     );

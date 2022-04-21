@@ -166,9 +166,9 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     });
     const hasData = !loading && !error && movies.length !== 0;
     const moviesList = hasData ? (
-      <div className="main">
-        <ul className="main__list list">{elements}</ul>
-        <div className="main__pagination pagination">
+      <div className="view">
+        <ul className="view__list list">{elements}</ul>
+        <div className="view__pagination pagination">
           <Pagination
             onChange={(page) => {
               this.handleChangePage(page);
