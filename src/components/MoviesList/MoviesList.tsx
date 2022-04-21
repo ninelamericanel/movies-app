@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { format } from 'date-fns';
-import { Pagination } from 'antd';
 
 import {
   CatchErrorFunc,
@@ -18,10 +17,9 @@ import {
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
 import { ErrorComponent } from 'components/ErrorComponent';
-import { Movie } from 'components/Movie';
+import { MoviesItem } from 'components/MoviesItem';
 
 import './MoviesList.scss';
-
 type CheckRatedMovieFunc = (id: string) => number;
 
 type MoviesListState = {
@@ -134,7 +132,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     return array.reduce((acc: number, rateMovie: MovieType) => {
       if (rateMovie.id === id) acc += rateMovie.rated;
       return acc;
-    }, 0);
+    }, 0); //преобразовать для поиска по айдишнику из ЛС
   };
 
   private truncateText: TruncateTextFunc = (text) => {
@@ -153,34 +151,11 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   render() {
-    const { loading, error, errorInfo, movies, totalResult, currentPage } = this.state;
+    const { loading, error, errorInfo, movies } = this.state;
     const loadComponent = loading ? <Spinner /> : null;
     const errorComponent = error ? <ErrorComponent errorInfo={errorInfo} /> : null;
-    const elements = movies.map((movie) => {
-      const { id } = movie;
-      return (
-        <li className="movie" key={id}>
-          <Movie movie={movie} setRateMovies={this.props.setRateMovies} />
-        </li>
-      );
-    });
     const hasData = !loading && !error && movies.length !== 0;
-    const moviesList = hasData ? (
-      <div className="view">
-        <ul className="view__list list">{elements}</ul>
-        <div className="view__pagination pagination">
-          <Pagination
-            onChange={(page) => {
-              this.handleChangePage(page);
-            }}
-            total={totalResult}
-            pageSize={20}
-            current={currentPage}
-            showSizeChanger={false}
-          />
-        </div>
-      </div>
-    ) : null;
+    const moviesList = hasData ? <MoviesItem listMovies={movies} setRateMovies={this.props.setRateMovies} /> : null;
 
     return (
       <>
