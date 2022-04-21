@@ -36,11 +36,9 @@ export interface Response {
 }
 
 export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
-export type TruncateTextFunc = (text: string) => string;
 export type OnLoadMoviesFunc = (movies: Response[]) => void;
 export type OnErrorFunc = (message: string) => void;
 export type CreateMovieViewFunc = (movie: Response) => MovieType;
-export type CheckEmptyFunc = (date: string) => string | null;
 export type HandleTotalResultFunc = (totalResult: number) => void;
 export type HandleChangePageFunc = (page: number) => void;
 export type SendRequestFunc = (value: string, page?: number) => void;

@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 
 import {
   CatchErrorFunc,
-  CheckEmptyFunc,
   CreateMovieViewFunc,
   HandleChangePageFunc,
   HandleTotalResultFunc,
@@ -12,7 +11,6 @@ import {
   OnLoadMoviesFunc,
   SendRequestFunc,
   SetRateMoviesFunc,
-  TruncateTextFunc,
 } from 'types/app';
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
@@ -118,7 +116,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     return {
       name: title,
       id: id.toString(),
-      release: this.checkEmpty(movie.release_date),
+      release: this.checkEmptyDate(movie.release_date),
       poster: movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : null,
       description: this.truncateText(overview),
       genresIds: movie.genre_ids,
@@ -135,7 +133,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     }, 0); //преобразовать для поиска по айдишнику из ЛС
   };
 
-  private truncateText: TruncateTextFunc = (text) => {
+  private truncateText = (text: string): string => {
     const maxLength = 100;
     if (text.length >= maxLength) {
       return text
@@ -146,7 +144,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     return text;
   };
 
-  private checkEmpty: CheckEmptyFunc = (date) => {
+  private checkEmptyDate = (date: string): string | null => {
     return date ? format(new Date(date), 'PP') : null;
   };
 

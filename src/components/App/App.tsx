@@ -79,10 +79,9 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   render() {
-    const { search, tab, ratedMovies, genres } = this.state;
+    const { search, tab, genres } = this.state;
     const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
-    const viewTab =
-      tab === 'rated' ? <RatedMovies ratedMovies={ratedMovies} setRateMovies={this.setRateMovies} /> : movieListOutput;
+    const viewTab = tab === 'rated' ? <RatedMovies setRateMovies={this.setRateMovies} /> : movieListOutput;
     const viewSearchInput =
       tab === 'search' ? <SearchInput search={search} setValueToSearch={this.setValueToSearch} /> : null;
     return (
