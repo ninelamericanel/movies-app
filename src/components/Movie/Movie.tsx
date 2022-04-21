@@ -88,3 +88,4 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
 };
 
 export default Movie;
+//перенести в movielist и сделать проверку по айдищникам
