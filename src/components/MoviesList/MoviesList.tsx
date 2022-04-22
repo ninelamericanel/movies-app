@@ -149,11 +149,20 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   render() {
-    const { loading, error, errorInfo, movies } = this.state;
+    const { loading, error, errorInfo, currentPage, totalResult, movies } = this.state;
     const loadComponent = loading ? <Spinner /> : null;
     const errorComponent = error ? <ErrorComponent errorInfo={errorInfo} /> : null;
     const hasData = !loading && !error && movies.length !== 0;
-    const moviesList = hasData ? <MoviesItem listMovies={movies} setRateMovies={this.props.setRateMovies} /> : null;
+    const moviesList = hasData ? (
+      <MoviesItem
+        currentPage={currentPage}
+        totalResult={totalResult}
+        pagination={true}
+        listMovies={movies}
+        setRateMovies={this.props.setRateMovies}
+        handleChangePage={this.handleChangePage}
+      />
+    ) : null;
 
     return (
       <>

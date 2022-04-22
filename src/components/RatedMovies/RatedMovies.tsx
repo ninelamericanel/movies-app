@@ -27,7 +27,9 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
   render() {
     const { ratedMovies } = this.state;
 
-    return <MoviesItem listMovies={ratedMovies} setRateMovies={this.props.setRateMovies}></MoviesItem>;
+    return (
+      <MoviesItem pagination={false} listMovies={ratedMovies} setRateMovies={this.props.setRateMovies}></MoviesItem>
+    );
   }
 }
 
