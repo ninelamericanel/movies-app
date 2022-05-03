@@ -5,10 +5,19 @@
 
   background: no-repeat url("magnifier.svg") center;
 
-  .movie__poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  @media screen and (max-width: 1009px) {
+    width: 60px;
+    height: 91px;
+  }
+
+  img {
+    width: 200px;
+    height: 300px;
+
+    @media screen and (max-width: 1009px) {
+      width: 60px;
+      height: 91px;
+    }
   }
 }
 
