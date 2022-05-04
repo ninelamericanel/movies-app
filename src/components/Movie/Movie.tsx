@@ -71,21 +71,18 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
   return (
     <>
       <div className="movie__poster">{srcPoster}</div>
-      <div className="movie__info">
-        <div className="movie__header">
-          <h5 className="movie__title">{name}</h5>
-          <div className={styleForRating(popularity)}>
-            <p>{popularity}</p>
-          </div>
+      <div className="movie__header">
+        <h5 className="movie__title">{name}</h5>
+        <div className={styleForRating(popularity)}>
+          <p>{popularity}</p>
         </div>
-        <p className="movie__realise">{release}</p>
-        <div className="movie__genres">{findGenres(React.useContext(GenresContext))}</div>
-        <p className="movie__description">{description}</p>
-        <Rate className="movie__rate" defaultValue={rated} allowHalf count={10} onChange={handleChange} />
       </div>
+      <p className="movie__realise">{release}</p>
+      <div className="movie__genres">{findGenres(React.useContext(GenresContext))}</div>
+      <p className="movie__description">{description}</p>
+      <Rate className="movie__rate" defaultValue={rated} allowHalf count={10} onChange={handleChange} />
     </>
   );
 };
 
 export default Movie;
-//перенести в movielist и сделать проверку по айдищникам
