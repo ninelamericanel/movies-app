@@ -1,5 +1,5 @@
 export default class MovieService {
-  api_key = '856dc569092ab9cdd989b0d8a88b2a64';
+  api_key = '6d5b169772ed153e688038b162dd0462';
 
   url = 'https://api.themoviedb.org/3';
 
