@@ -61,10 +61,10 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
   };
   const styleForRating = (value: number): string => {
     let className = 'movie__popularity';
-    if (value >= 0 && value < 3) className += ' red';
-    if (value >= 3 && value < 5) className += ' orange';
-    if (value >= 5 && value < 7) className += ' yellow';
-    if (value >= 7) className += ' green';
+    if (value >= 0 && value < 3) className += ' movie__popularity--red';
+    if (value >= 3 && value < 5) className += ' movie__popularity--orange';
+    if (value >= 5 && value < 7) className += ' movie__popularity--yellow';
+    if (value >= 7) className += ' movie__popularity--green';
     return className;
   };
 
