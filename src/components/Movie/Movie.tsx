@@ -25,9 +25,9 @@ const Movie: React.FC<MovieProps> = ({ movie, setRateMovies }) => {
     });
     return moviesGenres.map((genre: GenresType) => {
       return (
-        <p key={genre.id} className="movie__genre">
-          {genre.name}
-        </p>
+        <div key={genre.id} className="movie__genre">
+          <p>{genre.name}</p>
+        </div>
       );
     });
   };
