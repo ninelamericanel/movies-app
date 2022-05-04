@@ -130,11 +130,11 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     return array.reduce((acc: number, rateMovie: MovieType) => {
       if (rateMovie.id === id) acc += rateMovie.rated;
       return acc;
-    }, 0); //преобразовать для поиска по айдишнику из ЛС
+    }, 0);
   };
 
   private truncateText = (text: string): string => {
-    const maxLength = 100;
+    const maxLength = 120;
     if (text.length >= maxLength) {
       return text
         .slice(0, maxLength)
