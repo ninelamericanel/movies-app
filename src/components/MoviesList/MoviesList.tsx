@@ -117,7 +117,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       name: title,
       id: id.toString(),
       release: this.checkEmptyDate(movie.release_date),
-      poster: movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : null,
+      poster: movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : null,
       description: this.truncateText(overview),
       genresIds: movie.genre_ids,
       popularity: movie.vote_average,
