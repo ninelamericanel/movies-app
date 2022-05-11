@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { format } from 'date-fns';
+import { Alert } from 'antd';
 
 import {
   CatchErrorFunc,
@@ -14,10 +15,10 @@ import {
 } from 'types/app';
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
-import { ErrorComponent } from 'components/ErrorComponent';
 import { MoviesItem } from 'components/MoviesItem';
 
 import './MoviesList.scss';
+
 type CheckRatedMovieFunc = (id: string) => number;
 
 type MoviesListState = {
@@ -151,7 +152,9 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   render() {
     const { loading, error, errorInfo, currentPage, totalResult, movies } = this.state;
     const loadComponent = loading ? <Spinner /> : null;
-    const errorComponent = error ? <ErrorComponent errorInfo={errorInfo} /> : null;
+    const errorComponent = error ? (
+      <Alert className="alert" message="Error" description={errorInfo} type="error" />
+    ) : null;
     const hasData = !loading && !error && movies.length !== 0;
     const moviesList = hasData ? (
       <MoviesItem
