@@ -34,12 +34,16 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   componentDidMount() {
-    const movies = JSON.parse(localStorage.myRatedMovies || '[]');
-    localStorage.setItem('myRatedMovies', JSON.stringify(movies));
-    this.getResponseGenres();
-    this.setState({
-      ratedMovies: movies,
+    this.service.createGuestSession().then((guestSessionId) => {
+      const session = localStorage.sessionId ? localStorage.sessionId : guestSessionId;
+      localStorage.setItem('sessionId', session);
     });
+    // const movies = JSON.parse(localStorage.myRatedMovies || '[]');
+    // localStorage.setItem('myRatedMovies', JSON.stringify(movies));
+    // this.getResponseGenres();
+    // this.setState({
+    //   ratedMovies: movies,
+    // });
   }
 
   componentDidUpdate() {
