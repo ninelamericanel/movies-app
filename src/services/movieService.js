@@ -52,4 +52,23 @@ export default class MovieService {
       .then((res) => [res.results, res.total_results])
       .catch((err) => err);
   };
+
+  rateMovie = async () => {
+    const response = await fetch(
+      `${this.url}/movie/76088/rating?api_key=${this.api_key}&guest_session_id=5f412166cafa58c7f98577669b460b43`,
+      {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({
+          value: 8.5,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to rate movie, status code: ${response.status}`);
+    }
+  };
 }
