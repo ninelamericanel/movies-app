@@ -21,6 +21,26 @@ export default class MovieService {
     return response.json();
   };
 
+  getResponseGuestSession = async () => {
+    const response = await fetch(`${this.url}/authentication/guest_session/new?api_key=${this.api_key}`);
+    if (!response.ok) {
+      throw new Error(`Failed to create guest session! Code of Error: ${response.status}`);
+    }
+
+    return response.json();
+  };
+
+  createGuestSession = async () => {
+    return this.getResponseGuestSession()
+      .then((res) => {
+        if (!res.success) {
+          throw new Error(`Failed to create guest session! Code of Error: ${res.status_code}`);
+        }
+        return res.guest_session_id;
+      })
+      .catch((err) => err);
+  };
+
   getGenres = async () => {
     return this.getResponseGenres()
       .then((res) => res.genres)
