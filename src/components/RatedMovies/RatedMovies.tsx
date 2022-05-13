@@ -1,37 +1,37 @@
 import React, { Component } from 'react';
 
-import { RatedMovieType, SetRateMoviesFunc } from 'types/app';
+import { SetRateMoviesFunc } from 'types/app';
 import { MoviesItem } from 'components/MoviesItem';
+import MovieService from 'services/movieService';
 
 interface RatedMoviesProps {
   setRateMovies: SetRateMoviesFunc;
 }
 
 type RatedMoviesState = {
-  ratedMovies: RatedMovieType[];
+  movies: Response[] | [];
 };
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
+  service = new MovieService();
+
   state: RatedMoviesState = {
-    ratedMovies: [],
+    movies: [],
   };
 
   componentDidMount() {
-    const movies = JSON.parse(localStorage.myRatedMovies || '[]');
-    localStorage.setItem('myRatedMovies', JSON.stringify(movies));
-    this.setState({
-      ratedMovies: movies,
-    });
+    const session = localStorage.sessionId;
+    this.service.getRatedMovies(session).then((res) => this.viewMovies(res.results));
   }
+
+  viewMovies = (array) => {
+    this.setState({
+      movies: array,
+    });
+  };
 
   render() {
-    const { ratedMovies } = this.state;
-
-    return (
-      <MoviesItem pagination={false} listMovies={ratedMovies} setRateMovies={this.props.setRateMovies}></MoviesItem>
-    );
+    const { movies } = this.state;
+    return <MoviesItem pagination={false} listMovies={movies} setRateMovies={this.props.setRateMovies}></MoviesItem>;
   }
 }
-
-// export default RatedMovies;
-// pagination(true, false)
