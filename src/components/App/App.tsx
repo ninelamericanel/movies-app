@@ -43,7 +43,7 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   syncRateMovies = (): void => {
-    const ratedMovies = localStorage.myRatedMovies ? localStorage.myRatedMovies : JSON.stringify([]);
+    const ratedMovies = localStorage.myRatedMovies ? localStorage.myRatedMovies : JSON.stringify({});
     localStorage.setItem('myRatedMovies', ratedMovies);
   };
 
