@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { Alert } from 'antd';
 
-import { HandleChangePageFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
+import { HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
 import { MoviesItem } from 'components/MoviesItem';
+import { Spinner } from 'components/Spinner';
 import MovieService from 'services/movieService';
-
-import { Spinner } from '../Spinner';
 
 interface RatedMoviesProps {}
 
@@ -13,6 +13,8 @@ type RatedMoviesState = {
   totalResult: number;
   currentPage: number;
   loading: boolean;
+  error: boolean;
+  errorInfo: string;
 };
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
@@ -23,6 +25,8 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
     totalResult: 0,
     currentPage: 1,
     loading: true,
+    error: false,
+    errorInfo: '',
   };
 
   componentDidMount() {
@@ -37,9 +41,26 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
   }
 
   sendRequest = (page: number = 1) => {
+    this.resetError();
     const sessionId = localStorage.sessionId;
-    this.service.getRatedMovies(sessionId, page).then((res) => {
-      this.onLoadMovies(res.results, res.total_results);
+    this.service
+      .getRatedMovies(sessionId, page)
+      .then((res) => this.onLoadMovies(res.results, res.total_results))
+      .catch((error) => this.onError(error.message));
+  };
+
+  resetError = (): void => {
+    this.setState({
+      error: false,
+      errorInfo: '',
+    });
+  };
+
+  onError: OnErrorFunc = (message) => {
+    this.setState({
+      loading: false,
+      error: true,
+      errorInfo: message,
     });
   };
 
@@ -58,8 +79,11 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
   };
 
   render() {
-    const { movies, totalResult, currentPage, loading } = this.state;
+    const { movies, totalResult, currentPage, loading, error, errorInfo } = this.state;
     const loadComponent = loading ? <Spinner text="We are getting films that you like..." /> : null;
+    const errorComponent = error ? (
+      <Alert className="alert" message="Error" description={errorInfo} type="error" />
+    ) : null;
     const hasData = !loading && movies.length !== 0;
     const moviesList = hasData ? (
       <MoviesItem
@@ -73,6 +97,7 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
       <>
         {loadComponent}
         {moviesList}
+        {errorComponent}
       </>
     );
   }
