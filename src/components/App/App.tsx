@@ -4,7 +4,7 @@ import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
-import { RatedMovieType, SetRateMoviesFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
+import { RatedMovieType, SetRateMoviesFunc, SetValueToSearchFunc } from 'types/app';
 import MovieService from 'services/movieService';
 import { AppContextInterface, GenresContext } from 'genres-context/genres-context';
 
@@ -19,12 +19,8 @@ type AppState = {
 
 interface AppProps {}
 
-type GetGenresFunc = () => void;
-
 export default class App extends Component<AppProps | AppState> {
   service = new MovieService();
-
-  genres = [];
 
   state: AppState = {
     search: '',
@@ -57,7 +53,7 @@ export default class App extends Component<AppProps | AppState> {
     });
   };
 
-  getResponseGenres: GetGenresFunc = () => {
+  getResponseGenres = (): void => {
     this.service
       .getGenres()
       .then((res) => this.outputGenres(res))
@@ -70,7 +66,7 @@ export default class App extends Component<AppProps | AppState> {
     });
   };
 
-  setTab: SetTabFunc = (tab) => {
+  setTab = (tab: string): void => {
     this.setState({
       tab: tab,
     });
