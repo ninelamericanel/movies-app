@@ -9,10 +9,6 @@ export interface MovieType {
   rating: number | undefined;
 }
 
-export interface RatedMovieType extends MovieType {
-  updatedUp: number;
-}
-
 export interface GenresType {
   id: number;
   name: string;
