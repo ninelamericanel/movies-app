@@ -3,18 +3,16 @@ import { Pagination } from 'antd';
 import { format } from 'date-fns';
 
 import { Movie } from 'components/Movie';
-import { HandleChangePageFunc, MovieType, ResponseType, SetRateMoviesFunc } from 'types/app';
+import { HandleChangePageFunc, MovieType, ResponseType } from 'types/app';
 
 interface MoviesItemsProps {
   movies: ResponseType[];
-  setRateMovies: SetRateMoviesFunc;
-  totalResult?: number;
-  currentPage?: number;
+  totalResult: number;
+  currentPage: number;
   handleChangePage?: HandleChangePageFunc;
 }
 
-const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, totalResult, movies, setRateMovies }) => {
-
+const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, totalResult, movies }) => {
   const truncateText = (text: string): string => {
     const maxLength = 120;
     if (text.length >= maxLength) {
@@ -54,7 +52,7 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     const { id } = movie;
     return (
       <li className="movie" key={id}>
-        <Movie movie={rateMovie} setRateMovies={setRateMovies} />
+        <Movie movie={rateMovie} />
       </li>
     );
   });
@@ -68,6 +66,7 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
           total={totalResult}
           current={currentPage}
           showSizeChanger={false}
+          pageSize={20}
         />
       </div>
     </div>
