@@ -9,7 +9,7 @@ interface MoviesItemsProps {
   movies: ResponseType[];
   totalResult: number;
   currentPage: number;
-  handleChangePage?: HandleChangePageFunc;
+  handleChangePage: HandleChangePageFunc;
 }
 
 const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, totalResult, movies }) => {
@@ -23,7 +23,6 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     }
     return text;
   };
-
   const checkEmptyDate = (date: string): string | null => (date ? format(new Date(date), 'PP') : null);
 
   const checkRating = (id: number | undefined) => {
@@ -46,7 +45,6 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
       rating: movie.rating || rate,
     };
   };
-
   const elements = movies.map((movie) => {
     const rateMovie = createMovieView(movie);
     const { id } = movie;
