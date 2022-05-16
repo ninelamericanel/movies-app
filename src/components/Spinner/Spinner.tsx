@@ -3,14 +3,16 @@ import './Spinner.scss';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-interface SpinnerProps {}
+interface SpinnerProps {
+  text: string;
+}
 
-const Spinner: React.FC<SpinnerProps> = () => {
+const Spinner: React.FC<SpinnerProps> = ({ text }) => {
   const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
   return (
     <div className="spinner">
       <Spin indicator={antIcon} />
-      <p className="spinner__text">We are search movies...</p>
+      <p className="spinner__text">{text}</p>
     </div>
   );
 };
