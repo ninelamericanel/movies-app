@@ -16,10 +16,6 @@ interface RatedMovie {
   rating: number;
 }
 
-// interface HashMapRatedMovies {
-//   [id: string]: RatedMovieType;
-// }
-
 type HandleChangeFunc = (value: number) => void;
 
 const Movie: React.FC<MovieProps> = ({ movie }) => {
@@ -38,25 +34,6 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
     });
   };
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
-  // const getRatedMoviesFromLocalStorage = (): RatedMovieType[] => {
-  //   const value: any = localStorage.getItem('myRatedMovies');
-  //   return JSON.parse(value);
-  // };
-  // const makeHashMapRatedMovies = (array: RatedMovieType[]): RatedMovieType[] => {
-  //   const reducer = array.reduce((acc: HashMapRatedMovies, curr: RatedMovieType) => {
-  //     const idHash: string = curr.id;
-  //     acc[idHash] = curr;
-  //     return acc;
-  //   }, {});
-  //   return Object.values(reducer);
-  // };
-  // const sortArray = (array: RatedMovieType[]) => array.sort((a, b) => (a.updatedUp < b.updatedUp ? 1 : -1));
-  // const createRatedMovie = (unratedMovie: MovieType): RatedMovieType => {
-  //   return {
-  //     updatedUp: Date.now(),
-  //     ...unratedMovie,
-  //   };
-  // };
   const addedToLocalStorage = (value: number): void => {
     const array = JSON.parse(localStorage.myRatedMovies);
     const obj: RatedMovie = {
@@ -70,13 +47,6 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
     const sessionId = localStorage.sessionId;
     service.rateMovie(id, sessionId, value);
     addedToLocalStorage(value);
-    // localStorage.myRatedMovies =
-    // movie.rated = value;
-    // const ratedMov: RatedMovieType = createRatedMovie(movie);
-    // const ratedMoviesArray: RatedMovieType[] = getRatedMoviesFromLocalStorage();
-    // ratedMoviesArray.push(ratedMov);
-    // const arrayOfMovies: RatedMovieType[] = sortArray(makeHashMapRatedMovies(ratedMoviesArray));
-    // setRateMovies(arrayOfMovies);
   };
   const styleForRating = (value: number): string => {
     let className = 'movie__popularity';

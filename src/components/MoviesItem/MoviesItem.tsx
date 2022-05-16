@@ -14,13 +14,6 @@ interface MoviesItemsProps {
 }
 
 const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, totalResult, movies, setRateMovies }) => {
-  // const checkRatedMovie = (id: string): number => {
-  //   const array = JSON.parse(localStorage.myRatedMovies);
-  //   return array.reduce((acc: number, rateMovie: MovieType) => {
-  //     if (rateMovie.id === id) acc += rateMovie.rated;
-  //     return acc;
-  //   }, 0);
-  // };
 
   const truncateText = (text: string): string => {
     const maxLength = 120;

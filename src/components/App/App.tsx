@@ -50,11 +50,6 @@ export default class App extends Component<AppProps | AppState> {
     localStorage.setItem('myRatedMovies', ratedMovies);
   };
 
-  // componentDidUpdate() {
-  //   const { ratedMovies } = this.state;
-  //   localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
-  // }
-
   outputGenres = (array: []): void => {
     this.setState({
       genres: array,
