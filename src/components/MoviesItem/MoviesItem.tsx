@@ -24,13 +24,17 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     return text;
   };
   const checkEmptyDate = (date: string): string | null => (date ? format(new Date(date), 'PP') : null);
-
-  const checkRating = (id: number | undefined) => {
+  const checkRating = (id: number) => {
     const ratedMovies = JSON.parse(localStorage.myRatedMovies);
-    return ratedMovies.reduce((acc: number, rateMovie) => {
-      if (rateMovie.idRated == id) acc += rateMovie.rating;
-      return acc;
-    }, 0);
+    const ids = Object.keys(ratedMovies);
+    if (ids.length !== 0) {
+      return ids.reduce((acc: number, rateMovie) => {
+        if (+rateMovie === id) {
+          acc += ratedMovies[rateMovie];
+        }
+        return acc;
+      }, 0);
+    }
   };
   const createMovieView = (movie: ResponseType): MovieType => {
     const rate = checkRating(movie.id);
