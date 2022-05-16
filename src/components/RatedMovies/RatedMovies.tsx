@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 
-import { ResponseType, SetRateMoviesFunc } from 'types/app';
+import { HandleChangePageFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
 import { MoviesItem } from 'components/MoviesItem';
 import MovieService from 'services/movieService';
 
-interface RatedMoviesProps {
-  setRateMovies: SetRateMoviesFunc;
-}
+import { Spinner } from '../Spinner';
+
+interface RatedMoviesProps {}
 
 type RatedMoviesState = {
   movies: ResponseType[] | [];
   totalResult: number;
   currentPage: number;
+  loading: boolean;
 };
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
@@ -21,32 +22,58 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
     movies: [],
     totalResult: 0,
     currentPage: 1,
+    loading: true,
   };
 
   componentDidMount() {
-    const session = localStorage.sessionId;
-    this.service.getRatedMovies(session).then((res) => {
-      this.viewMovies(res.results, res.page, res.total_results);
-    });
+    this.sendRequest();
   }
 
-  viewMovies = (array: ResponseType[], page: number, totalResults: number): void => {
+  componentDidUpdate(prevProps: RatedMoviesProps, prevState: RatedMoviesState): void {
+    const { currentPage } = this.state;
+    if (currentPage !== prevState.currentPage) {
+      this.sendRequest(currentPage);
+    }
+  }
+
+  sendRequest = (page: number = 1) => {
+    const sessionId = localStorage.sessionId;
+    this.service.getRatedMovies(sessionId, page).then((res) => {
+      this.onLoadMovies(res.results, res.total_results);
+    });
+  };
+
+  handleChangePage: HandleChangePageFunc = (page) => {
     this.setState({
-      movies: array,
-      totalResult: totalResults,
       currentPage: page,
     });
   };
 
+  onLoadMovies: OnLoadMoviesFunc = (array, totalResults) => {
+    this.setState({
+      movies: array,
+      totalResult: totalResults,
+      loading: false,
+    });
+  };
+
   render() {
-    const { movies, totalResult, currentPage } = this.state;
-    return (
+    const { movies, totalResult, currentPage, loading } = this.state;
+    const loadComponent = loading ? <Spinner text="We are getting films that you like..." /> : null;
+    const hasData = !loading && movies.length !== 0;
+    const moviesList = hasData ? (
       <MoviesItem
         movies={movies}
         totalResult={totalResult}
         currentPage={currentPage}
-        setRateMovies={this.props.setRateMovies}
-      ></MoviesItem>
+        handleChangePage={this.handleChangePage}
+      />
+    ) : null;
+    return (
+      <>
+        {loadComponent}
+        {moviesList}
+      </>
     );
   }
 }
