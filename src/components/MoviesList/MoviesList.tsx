@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'antd';
 
-import {
-  CatchErrorFunc,
-  HandleChangePageFunc,
-  HandleTotalResultFunc,
-  OnErrorFunc,
-  ResponseType,
-  SendRequestFunc,
-  SetRateMoviesFunc,
-} from 'types/app';
+import { CatchErrorFunc, HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
 import { MoviesItem } from 'components/MoviesItem';
@@ -27,7 +19,6 @@ type MoviesListState = {
 
 interface MoviesListProps {
   search: string;
-  setRateMovies: SetRateMoviesFunc;
 }
 
 export default class MoviesList extends Component<MoviesListProps, MoviesListState> {
@@ -57,14 +48,13 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     }
   }
 
-  sendRequest: SendRequestFunc = (value, page = 1) => {
+  sendRequest = (value: string, page: number = 1): void => {
     this.resetError();
     this.service
       .getMovies(value, page)
       .then(([response, totalResult]) => {
         this.catchError(response);
-        this.onLoadMovies(response);
-        this.handleTotalResult(totalResult);
+        this.onLoadMovies(response, totalResult);
       })
       .catch((error) => {
         this.onError(error.message);
@@ -83,26 +73,21 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     if (response.length === 0) throw new Error('Not found');
   };
 
-  handleTotalResult: HandleTotalResultFunc = (result) => {
-    this.setState({
-      totalResult: result,
-    });
-  };
-
   handleChangePage: HandleChangePageFunc = (page) => {
     this.setState({
       currentPage: page,
     });
   };
 
-  onLoadMovies = (array: ResponseType[]): void => {
+  onLoadMovies: OnLoadMoviesFunc = (array, totalResult) => {
     this.setState({
       movies: array,
+      totalResult: totalResult,
       loading: false,
     });
   };
 
-  onError: OnErrorFunc = (message) => {
+  onError: OnErrorFunc = (message: string): void => {
     this.setState({
       loading: false,
       error: true,
@@ -112,7 +97,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
 
   render() {
     const { loading, error, errorInfo, currentPage, totalResult, movies } = this.state;
-    const loadComponent = loading ? <Spinner /> : null;
+    const loadComponent = loading ? <Spinner text="We are search movies..." /> : null;
     const errorComponent = error ? (
       <Alert className="alert" message="Error" description={errorInfo} type="error" />
     ) : null;
@@ -122,7 +107,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
         currentPage={currentPage}
         totalResult={totalResult}
         movies={movies}
-        setRateMovies={this.props.setRateMovies}
         handleChangePage={this.handleChangePage}
       />
     ) : null;
