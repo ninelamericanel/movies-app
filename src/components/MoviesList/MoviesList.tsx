@@ -58,10 +58,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   }
 
   sendRequest: SendRequestFunc = (value, page = 1) => {
-    this.setState({
-      error: false,
-      errorInfo: '',
-    });
+    this.resetError();
     this.service
       .getMovies(value, page)
       .then(([response, totalResult]) => {
@@ -72,6 +69,13 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       .catch((error) => {
         this.onError(error.message);
       });
+  };
+
+  resetError = (): void => {
+    this.setState({
+      error: false,
+      errorInfo: '',
+    });
   };
 
   catchError: CatchErrorFunc = (response) => {
