@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'antd';
 
-import { CatchErrorFunc, HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
+import { HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
 import { MoviesItem } from 'components/MoviesItem';
@@ -68,7 +68,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     });
   };
 
-  catchError: CatchErrorFunc = (response) => {
+  catchError = (response: any): void => {
     if (response instanceof Error) throw new Error(response.message);
     if (response.length === 0) throw new Error('Not found');
   };
