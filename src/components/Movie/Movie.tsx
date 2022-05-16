@@ -10,12 +10,6 @@ import MovieService from 'services/movieService';
 interface MovieProps {
   movie: MovieType;
 }
-interface RatedMovie {
-  idRated: string;
-  rating: number;
-}
-
-type HandleChangeFunc = (value: number) => void;
 
 const Movie: React.FC<MovieProps> = ({ movie }) => {
   const service = new MovieService();
@@ -34,15 +28,11 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
   };
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
   const addedToLocalStorage = (value: number): void => {
-    const array = JSON.parse(localStorage.myRatedMovies);
-    const obj: RatedMovie = {
-      idRated: id,
-      rating: value,
-    };
-    array.push(obj);
-    localStorage.myRatedMovies = JSON.stringify(array);
+    const ratedMovies = JSON.parse(localStorage.myRatedMovies);
+    ratedMovies[id] = value;
+    localStorage.myRatedMovies = JSON.stringify(ratedMovies);
   };
-  const handleRateMovie: HandleChangeFunc = (value) => {
+  const handleRateMovie = (value: number): void => {
     const sessionId = localStorage.sessionId;
     service.rateMovie(id, sessionId, value);
     addedToLocalStorage(value);
