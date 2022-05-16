@@ -36,6 +36,7 @@ export default class App extends Component<AppProps | AppState> {
   componentDidMount() {
     this.createGuestSessionId();
     this.syncRateMovies();
+    this.getResponseGenres();
   }
 
   createGuestSessionId = (): void => {
