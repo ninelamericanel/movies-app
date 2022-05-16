@@ -39,11 +39,5 @@ export interface ResponseType {
 export type HandleChangePageFunc = (page: number) => void;
 export type OnLoadMoviesFunc = (array: ResponseType[], totalResults: number) => void;
 export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
-
+export type SetTabFunc = (tab: string) => void;
 export type OnErrorFunc = (message: string) => void;
-export type CreateMovieViewFunc = (movie: Response) => MovieType;
-export type HandleTotalResultFunc = (totalResult: number) => void;
-
-// export type SendRequestFunc = (value: string, page?: number) => void;
-export type CatchErrorFunc = (response: any) => void;
-export type SetRateMoviesFunc = (array: MovieType[]) => void;
