@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rate } from 'antd';
 
-import { GenresType, MovieType, SetRateMoviesFunc } from 'types/app';
+import { GenresType, MovieType } from 'types/app';
 import './Movie.scss';
 import 'antd/dist/antd.css';
 import { GenresContext } from 'genres-context/genres-context';
@@ -9,7 +9,6 @@ import MovieService from 'services/movieService';
 
 interface MovieProps {
   movie: MovieType;
-  setRateMovies: SetRateMoviesFunc;
 }
 interface RatedMovie {
   idRated: string;
