@@ -4,7 +4,7 @@ import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
-import { RatedMovieType, SetRateMoviesFunc, SetValueToSearchFunc } from 'types/app';
+import { RatedMovieType, SetTabFunc, SetValueToSearchFunc } from 'types/app';
 import MovieService from 'services/movieService';
 import { AppContextInterface, GenresContext } from 'genres-context/genres-context';
 
@@ -66,22 +66,16 @@ export default class App extends Component<AppProps | AppState> {
     });
   };
 
-  setTab = (tab: string): void => {
+  setTab: SetTabFunc = (tab) => {
     this.setState({
       tab: tab,
     });
   };
 
-  setRateMovies: SetRateMoviesFunc = (array) => {
-    this.setState({
-      ratedMovies: array,
-    });
-  };
-
   render() {
     const { search, tab, genres } = this.state;
-    const movieListOutput = search ? <MoviesList search={search} setRateMovies={this.setRateMovies} /> : null;
-    const viewTab = tab === 'rated' ? <RatedMovies setRateMovies={this.setRateMovies} /> : movieListOutput;
+    const movieListOutput = search ? <MoviesList search={search} /> : null;
+    const viewTab = tab === 'rated' ? <RatedMovies /> : movieListOutput;
     const viewSearchInput =
       tab === 'search' ? <SearchInput search={search} setValueToSearch={this.setValueToSearch} /> : null;
     return (
