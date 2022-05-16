@@ -11,7 +11,7 @@ const Spinner: React.FC<SpinnerProps> = ({ text }) => {
   const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
   return (
     <div className="spinner">
-      <Spin indicator={antIcon} />
+      <Spin className="spinner__spin" indicator={antIcon} />
       <p className="spinner__text">{text}</p>
     </div>
   );

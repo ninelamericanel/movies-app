@@ -1,9 +1,17 @@
 .spinner {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  row-gap: 20px;
+
+  .spinner__spin {
+    color: #1890FF;
+  }
 
   .spinner__text {
-    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
   }
 }
