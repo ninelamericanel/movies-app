@@ -37,13 +37,10 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
 
   const checkRating = (id: number | undefined) => {
     const ratedMovies = JSON.parse(localStorage.myRatedMovies);
-    let rating = 0;
-    ratedMovies.forEach((item) => {
-      if (item.idRated == id) {
-        rating = item.rating;
-      }
-    });
-    return rating;
+    return ratedMovies.reduce((acc: number, rateMovie) => {
+      if (rateMovie.idRated == id) acc += rateMovie.rating;
+      return acc;
+    }, 0);
   };
   const createMovieView = (movie: ResponseType): MovieType => {
     const rate = checkRating(movie.id);
@@ -60,7 +57,6 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
   };
 
   const elements = movies.map((movie) => {
-    // console.log(movie);
     const rateMovie = createMovieView(movie);
     const { id } = movie;
     return (

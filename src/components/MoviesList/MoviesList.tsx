@@ -92,7 +92,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   onLoadMovies = (array: ResponseType[]): void => {
-    console.log(array);
     this.setState({
       movies: array,
       loading: false,
