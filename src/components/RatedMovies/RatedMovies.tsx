@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { SetRateMoviesFunc } from 'types/app';
+import { ResponseType, SetRateMoviesFunc } from 'types/app';
 import { MoviesItem } from 'components/MoviesItem';
 import MovieService from 'services/movieService';
 
@@ -9,7 +9,7 @@ interface RatedMoviesProps {
 }
 
 type RatedMoviesState = {
-  movies: Response[] | [];
+  movies: ResponseType[] | [];
 };
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
@@ -32,6 +32,6 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
 
   render() {
     const { movies } = this.state;
-    return <MoviesItem pagination={false} listMovies={movies} setRateMovies={this.props.setRateMovies}></MoviesItem>;
+    return <MoviesItem movies={movies} setRateMovies={this.props.setRateMovies}></MoviesItem>;
   }
 }

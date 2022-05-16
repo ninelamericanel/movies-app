@@ -53,6 +53,15 @@ export default class MovieService {
       .catch((err) => err);
   };
 
+  getRatedMovies = async (sessionId) => {
+    const response = await fetch(`${this.url}/guest_session/${sessionId}/rated/movies?api_key=${this.api_key}`);
+    if (!response.ok) {
+      throw new Error(`Failed to getting rated movies, code of Error: ${response.status}`);
+    }
+
+    return response.json();
+  };
+
   rateMovie = async (id, sessionId, rating) => {
     const response = await fetch(
       `${this.url}/movie/${id}/rating?api_key=${this.api_key}&guest_session_id=${sessionId}`,

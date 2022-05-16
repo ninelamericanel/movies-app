@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { format } from 'date-fns';
 import { Alert } from 'antd';
 
 import {
   CatchErrorFunc,
-  CreateMovieViewFunc,
   HandleChangePageFunc,
   HandleTotalResultFunc,
-  MovieType,
   OnErrorFunc,
-  OnLoadMoviesFunc,
+  ResponseType,
   SendRequestFunc,
   SetRateMoviesFunc,
 } from 'types/app';
@@ -19,10 +16,8 @@ import { MoviesItem } from 'components/MoviesItem';
 
 import './MoviesList.scss';
 
-type CheckRatedMovieFunc = (id: string) => number;
-
 type MoviesListState = {
-  movies: MovieType[];
+  movies: ResponseType[] | [];
   totalResult: number;
   loading: boolean;
   error: boolean;
@@ -96,10 +91,10 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     });
   };
 
-  onLoadMovies: OnLoadMoviesFunc = (movies) => {
-    let arr = movies.map((movie) => this.createMovieView(movie));
+  onLoadMovies = (array: ResponseType[]): void => {
+    console.log(array);
     this.setState({
-      movies: arr,
+      movies: array,
       loading: false,
     });
   };
@@ -110,43 +105,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       error: true,
       errorInfo: message,
     });
-  };
-
-  private createMovieView: CreateMovieViewFunc = (movie) => {
-    const { title, id, overview } = movie;
-    return {
-      name: title,
-      id: id.toString(),
-      release: this.checkEmptyDate(movie.release_date),
-      poster: movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : null,
-      description: this.truncateText(overview),
-      genresIds: movie.genre_ids,
-      popularity: movie.vote_average,
-      rated: this.checkRatedMovie(id.toString()),
-    };
-  };
-
-  checkRatedMovie: CheckRatedMovieFunc = (id) => {
-    const array = JSON.parse(localStorage.myRatedMovies);
-    return array.reduce((acc: number, rateMovie: MovieType) => {
-      if (rateMovie.id === id) acc += rateMovie.rated;
-      return acc;
-    }, 0);
-  };
-
-  private truncateText = (text: string): string => {
-    const maxLength = 120;
-    if (text.length >= maxLength) {
-      return text
-        .slice(0, maxLength)
-        .trim()
-        .replace(/\W*\s(\S)*$/, '...');
-    }
-    return text;
-  };
-
-  private checkEmptyDate = (date: string): string | null => {
-    return date ? format(new Date(date), 'PP') : null;
   };
 
   render() {
@@ -160,8 +118,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       <MoviesItem
         currentPage={currentPage}
         totalResult={totalResult}
-        pagination={true}
-        listMovies={movies}
+        movies={movies}
         setRateMovies={this.props.setRateMovies}
         handleChangePage={this.handleChangePage}
       />

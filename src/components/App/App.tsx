@@ -34,16 +34,26 @@ export default class App extends Component<AppProps | AppState> {
   };
 
   componentDidMount() {
+    this.createGuestSessionId();
+    this.syncRateMovies();
+  }
+
+  createGuestSessionId = (): void => {
     this.service.createGuestSession().then((guestSessionId) => {
       const session = localStorage.sessionId ? localStorage.sessionId : guestSessionId;
       localStorage.setItem('sessionId', session);
     });
-  }
+  };
 
-  componentDidUpdate() {
-    const { ratedMovies } = this.state;
-    localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
-  }
+  syncRateMovies = (): void => {
+    const ratedMovies = localStorage.myRatedMovies ? localStorage.myRatedMovies : JSON.stringify([]);
+    localStorage.setItem('myRatedMovies', ratedMovies);
+  };
+
+  // componentDidUpdate() {
+  //   const { ratedMovies } = this.state;
+  //   localStorage.setItem('myRatedMovies', JSON.stringify(ratedMovies));
+  // }
 
   outputGenres = (array: []): void => {
     this.setState({

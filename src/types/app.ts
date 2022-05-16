@@ -6,10 +6,10 @@ export interface MovieType {
   description: string;
   poster: string | null;
   popularity: number;
-  rated: number;
+  rating: number | undefined;
 }
 
-export interface RatedMovieType extends MovieType{
+export interface RatedMovieType extends MovieType {
   updatedUp: number;
 }
 
@@ -18,7 +18,7 @@ export interface GenresType {
   name: string;
 }
 
-export interface Response {
+export interface ResponseType {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -33,6 +33,7 @@ export interface Response {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  rating?: number;
 }
 
 export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
