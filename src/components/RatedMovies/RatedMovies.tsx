@@ -10,6 +10,8 @@ interface RatedMoviesProps {
 
 type RatedMoviesState = {
   movies: ResponseType[] | [];
+  totalResult: number;
+  currentPage: number;
 };
 
 export default class RatedMovies extends Component<RatedMoviesProps, RatedMoviesState> {
@@ -17,21 +19,34 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
 
   state: RatedMoviesState = {
     movies: [],
+    totalResult: 0,
+    currentPage: 1,
   };
 
   componentDidMount() {
     const session = localStorage.sessionId;
-    this.service.getRatedMovies(session).then((res) => this.viewMovies(res.results));
+    this.service.getRatedMovies(session).then((res) => {
+      this.viewMovies(res.results, res.page, res.total_results);
+    });
   }
 
-  viewMovies = (array) => {
+  viewMovies = (array: ResponseType[], page: number, totalResults: number): void => {
     this.setState({
       movies: array,
+      totalResult: totalResults,
+      currentPage: page,
     });
   };
 
   render() {
-    const { movies } = this.state;
-    return <MoviesItem movies={movies} setRateMovies={this.props.setRateMovies}></MoviesItem>;
+    const { movies, totalResult, currentPage } = this.state;
+    return (
+      <MoviesItem
+        movies={movies}
+        totalResult={totalResult}
+        currentPage={currentPage}
+        setRateMovies={this.props.setRateMovies}
+      ></MoviesItem>
+    );
   }
 }
