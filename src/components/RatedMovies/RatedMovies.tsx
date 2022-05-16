@@ -5,7 +5,7 @@ import { HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } fro
 import { MoviesItem } from 'components/MoviesItem';
 import { Spinner } from 'components/Spinner';
 import MovieService from 'services/movieService';
-//
+
 interface RatedMoviesProps {}
 
 type RatedMoviesState = {
