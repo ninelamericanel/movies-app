@@ -68,9 +68,7 @@
   },
   "lint-staged": {
     "*.ts?(x)": [
-      "lint",
-      "lint:fix",
-      "format"
+      "eslint --fix"
     ]
   }
 }
