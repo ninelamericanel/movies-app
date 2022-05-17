@@ -56,9 +56,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
         this.catchError(response);
         this.onLoadMovies(response, totalResult);
       })
-      .catch((error) => {
-        this.onError(error.message);
-      });
+      .catch(() => this.onError('Failed to fetch response! You can try to connect vpn.'));
   };
 
   resetError = (): void => {
@@ -69,9 +67,15 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   };
 
   catchError = (response: any): void => {
-    if (response instanceof Error) throw new Error(response.message);
+    if (response instanceof Error) {
+      throw new Error(`Something wrong happen! Error code: ${response}`);
+    }
     if (response.length === 0) throw new Error('Not found');
   };
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.log(error, errorInfo);
+  }
 
   handleChangePage: HandleChangePageFunc = (page) => {
     this.setState({

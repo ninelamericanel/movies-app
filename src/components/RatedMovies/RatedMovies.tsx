@@ -46,7 +46,14 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
     this.service
       .getRatedMovies(sessionId, page)
       .then((res) => this.onLoadMovies(res.results, res.total_results))
-      .catch((error) => this.onError(error.message));
+      .catch(() => {
+        this.catchError();
+        this.onError('Failed to fetch response! You can try to connect vpn.');
+      });
+  };
+
+  catchError = () => {
+    localStorage.clear();
   };
 
   resetError = (): void => {
