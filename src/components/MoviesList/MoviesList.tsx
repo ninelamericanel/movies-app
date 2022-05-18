@@ -53,10 +53,14 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     this.service
       .getMovies(value, page)
       .then(([response, totalResult]) => {
-        this.catchError(response);
+        if (response.length === 0) throw new Error('Not found');
         this.onLoadMovies(response, totalResult);
       })
-      .catch(() => this.onError('Failed to fetch response! You can try to connect vpn.'));
+      .catch((error) =>
+        error.message === 'Not found'
+          ? this.onError(error.message)
+          : this.onError('Failed to fetch response! You can try to connect vpn.')
+      );
   };
 
   resetError = (): void => {
@@ -65,17 +69,6 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       errorInfo: '',
     });
   };
-
-  catchError = (response: any): void => {
-    if (response instanceof Error) {
-      throw new Error(`Something wrong happen! Error code: ${response}`);
-    }
-    if (response.length === 0) throw new Error('Not found');
-  };
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.log(error, errorInfo);
-  }
 
   handleChangePage: HandleChangePageFunc = (page) => {
     this.setState({
