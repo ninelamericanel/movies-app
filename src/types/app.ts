@@ -39,3 +39,7 @@ export type SetTabFunc = (tab: string) => void;
 export type OnErrorFunc = (message: string) => void;
 export type NoParamsVoidFunc = () => void;
 export type OutputGenresFunc = (array: []) => void;
+export type StyleForRatingFunc = (value: number) => string;
+export type HandleRateMovieFunc = (value: number) => void;
+export type AddedToLocalStorageFunc = (value: number) => void;
+export type FindGenresFunc = (array: GenresType[]) => JSX.Element[];

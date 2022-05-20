@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Rate } from 'antd';
 
-import { GenresType, MovieType } from 'types/app';
+import {
+  AddedToLocalStorageFunc,
+  FindGenresFunc,
+  GenresType,
+  HandleRateMovieFunc,
+  MovieType,
+  StyleForRatingFunc,
+} from 'types/app';
 import './Movie.scss';
 import 'antd/dist/antd.css';
 import { GenresContext } from 'genres-context/genres-context';
@@ -11,10 +18,10 @@ interface MovieProps {
   movie: MovieType;
 }
 
-const Movie: React.FC<MovieProps> = ({ movie }) => {
+const Movie: FC<MovieProps> = ({ movie }) => {
   const service = new MovieService();
   const { id, name, description, poster, release, popularity, rating, genresIds } = movie;
-  const findGenres = (array: GenresType[]) => {
+  const findGenres: FindGenresFunc = (array) => {
     const moviesGenres = array.filter((genre: GenresType) => {
       return genresIds.includes(genre.id);
     });
@@ -27,17 +34,17 @@ const Movie: React.FC<MovieProps> = ({ movie }) => {
     });
   };
   const srcPoster = poster ? <img src={poster} title={name}></img> : null;
-  const addedToLocalStorage = (value: number): void => {
+  const addedToLocalStorage: AddedToLocalStorageFunc = (value) => {
     const ratedMovies = JSON.parse(localStorage.myRatedMovies);
     ratedMovies[id] = value;
     localStorage.myRatedMovies = JSON.stringify(ratedMovies);
   };
-  const handleRateMovie = (value: number): void => {
+  const handleRateMovie: HandleRateMovieFunc = (value) => {
     const sessionId = localStorage.sessionId;
     service.rateMovie(id, sessionId, value);
     addedToLocalStorage(value);
   };
-  const styleForRating = (value: number): string => {
+  const styleForRating: StyleForRatingFunc = (value) => {
     let className = 'movie__popularity';
     if (value >= 0 && value < 3) className += ' movie__popularity--red';
     if (value >= 3 && value < 5) className += ' movie__popularity--orange';
