@@ -43,3 +43,7 @@ export type StyleForRatingFunc = (value: number) => string;
 export type HandleRateMovieFunc = (value: number) => void;
 export type AddedToLocalStorageFunc = (value: number) => void;
 export type FindGenresFunc = (array: GenresType[]) => JSX.Element[];
+export type TruncateTextFunc = (text: string) => string;
+export type CreateMovieViewFunc = (movie: ResponseType) => MovieType;
+export type CheckEmptyDateFunc = (date: string) => string | null;
+export type CheckRatingFunc = (id: number) => number | undefined;

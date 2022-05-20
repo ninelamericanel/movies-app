@@ -3,7 +3,14 @@ import { Pagination } from 'antd';
 import { format } from 'date-fns';
 
 import { Movie } from 'components/Movie';
-import { HandleChangePageFunc, MovieType, ResponseType } from 'types/app';
+import {
+  CheckEmptyDateFunc,
+  CheckRatingFunc,
+  CreateMovieViewFunc,
+  HandleChangePageFunc,
+  ResponseType,
+  TruncateTextFunc,
+} from 'types/app';
 
 interface MoviesItemsProps {
   movies: ResponseType[];
@@ -13,7 +20,7 @@ interface MoviesItemsProps {
 }
 
 const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, totalResult, movies }) => {
-  const truncateText = (text: string): string => {
+  const truncateText: TruncateTextFunc = (text) => {
     const maxLength = 120;
     if (text.length >= maxLength) {
       return text
@@ -23,8 +30,8 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     }
     return text;
   };
-  const checkEmptyDate = (date: string): string | null => (date ? format(new Date(date), 'PP') : null);
-  const checkRating = (id: number) => {
+  const checkEmptyDate: CheckEmptyDateFunc = (date) => (date ? format(new Date(date), 'PP') : null);
+  const checkRating: CheckRatingFunc = (id) => {
     const ratedMovies = JSON.parse(localStorage.myRatedMovies);
     const ids = Object.keys(ratedMovies);
     if (ids.length !== 0) {
@@ -36,7 +43,7 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
       }, 0);
     }
   };
-  const createMovieView = (movie: ResponseType): MovieType => {
+  const createMovieView: CreateMovieViewFunc = (movie) => {
     const rate = checkRating(movie.id);
     return {
       name: movie.title,
