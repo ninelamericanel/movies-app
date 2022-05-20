@@ -66,9 +66,8 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     );
   });
 
-  return (
-    <div className="view">
-      <ul className="view__list list">{elements}</ul>
+  const viewPagination =
+    totalResult > 20 ? (
       <div className="view__pagination pagination">
         <Pagination
           onChange={(page) => (handleChangePage ? handleChangePage(page) : null)}
@@ -78,6 +77,12 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
           pageSize={20}
         />
       </div>
+    ) : null;
+
+  return (
+    <div className="view">
+      <ul className="view__list list">{elements}</ul>
+      {viewPagination}
     </div>
   );
 };
