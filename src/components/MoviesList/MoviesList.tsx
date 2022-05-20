@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Alert } from 'antd';
 
-import { HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
+import {
+  HandleChangePageFunc,
+  NoParamsVoidFunc,
+  OnErrorFunc,
+  OnLoadMoviesFunc,
+  ResponseType,
+  SendRequestFunc,
+} from 'types/app';
 import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
 import { MoviesItem } from 'components/MoviesItem';
@@ -37,7 +44,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     this.sendRequest(this.props.search);
   }
 
-  componentDidUpdate(prevProps: MoviesListProps, prevState: MoviesListState): void {
+  componentDidUpdate(prevProps: MoviesListProps, prevState: MoviesListState) {
     const { search } = this.props;
     const { currentPage } = this.state;
     if (search !== prevProps.search) {
@@ -48,7 +55,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     }
   }
 
-  sendRequest = (value: string, page: number = 1): void => {
+  sendRequest: SendRequestFunc = (value, page = 1) => {
     this.resetError();
     this.service
       .getMovies(value, page)
@@ -63,7 +70,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       );
   };
 
-  resetError = (): void => {
+  resetError: NoParamsVoidFunc = () => {
     this.setState({
       error: false,
       errorInfo: '',
@@ -84,7 +91,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
     });
   };
 
-  onError: OnErrorFunc = (message: string): void => {
+  onError: OnErrorFunc = (message) => {
     this.setState({
       loading: false,
       error: true,

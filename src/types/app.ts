@@ -47,3 +47,4 @@ export type TruncateTextFunc = (text: string) => string;
 export type CreateMovieViewFunc = (movie: ResponseType) => MovieType;
 export type CheckEmptyDateFunc = (date: string) => string | null;
 export type CheckRatingFunc = (id: number) => number | undefined;
+export type SendRequestFunc = (value: string, page?: number) => void;
