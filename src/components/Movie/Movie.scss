@@ -33,6 +33,7 @@
 
   &__poster {
     grid-area: poster;
+    background: url("magnifier.svg") no-repeat center;
 
     img {
       width: 200px;
