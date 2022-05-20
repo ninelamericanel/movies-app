@@ -3,6 +3,7 @@ import ReactDOMClient from 'react-dom/client';
 
 import { App } from './components/App';
 import './reset.scss';
+import './normalize.scss';
 
 const root = ReactDOMClient.createRoot(document.getElementById('root')!);
 
