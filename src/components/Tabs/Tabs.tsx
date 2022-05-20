@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import './Tabs.scss';
-import { SetTabFunc } from 'types/app';
+import { HandleClickFunc, SetTabFunc } from 'types/app';
 
 interface TabsProps {
   setTab: SetTabFunc;
 }
-
-type HandleClickFunc = (event: React.MouseEvent<HTMLElement>) => void;
 
 const Tabs: React.FC<TabsProps> = ({ setTab }) => {
   const [activeButton, setActiveButton] = useState('search');
