@@ -37,3 +37,5 @@ export type OnLoadMoviesFunc = (array: ResponseType[], totalResults: number) => 
 export type SetValueToSearchFunc = (value: HTMLButtonElement) => void;
 export type SetTabFunc = (tab: string) => void;
 export type OnErrorFunc = (message: string) => void;
+export type NoParamsVoidFunc = () => void;
+export type OutputGenresFunc = (array: []) => void;
