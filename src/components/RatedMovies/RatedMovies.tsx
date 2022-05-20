@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Alert } from 'antd';
 
-import { HandleChangePageFunc, OnErrorFunc, OnLoadMoviesFunc, ResponseType } from 'types/app';
+import {
+  HandleChangePageFunc,
+  NoParamsVoidFunc,
+  OnErrorFunc,
+  OnLoadMoviesFunc,
+  ResponseType,
+  SendRequestRatedMoviesFunc
+} from "types/app";
 import { MoviesItem } from 'components/MoviesItem';
 import { Spinner } from 'components/Spinner';
 import MovieService from 'services/movieService';
@@ -33,14 +40,14 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
     this.sendRequest();
   }
 
-  componentDidUpdate(prevProps: RatedMoviesProps, prevState: RatedMoviesState): void {
+  componentDidUpdate(prevProps: RatedMoviesProps, prevState: RatedMoviesState) {
     const { currentPage } = this.state;
     if (currentPage !== prevState.currentPage) {
       this.sendRequest(currentPage);
     }
   }
 
-  sendRequest = (page: number = 1) => {
+  sendRequest: SendRequestRatedMoviesFunc = (page = 1) => {
     this.resetError();
     const sessionId = localStorage.sessionId;
     this.service
@@ -52,11 +59,11 @@ export default class RatedMovies extends Component<RatedMoviesProps, RatedMovies
       });
   };
 
-  catchError = () => {
+  catchError: NoParamsVoidFunc = () => {
     localStorage.clear();
   };
 
-  resetError = (): void => {
+  resetError: NoParamsVoidFunc = () => {
     this.setState({
       error: false,
       errorInfo: '',
