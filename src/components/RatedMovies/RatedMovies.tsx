@@ -7,8 +7,8 @@ import {
   OnErrorFunc,
   OnLoadMoviesFunc,
   ResponseType,
-  SendRequestRatedMoviesFunc
-} from "types/app";
+  SendRequestRatedMoviesFunc,
+} from 'types/app';
 import { MoviesItem } from 'components/MoviesItem';
 import { Spinner } from 'components/Spinner';
 import MovieService from 'services/movieService';
