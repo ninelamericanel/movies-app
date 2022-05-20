@@ -4,7 +4,7 @@ import { MoviesList } from 'components/MoviesList';
 import { Tabs } from 'components/Tabs';
 import { SearchInput } from 'components/SearchInput';
 import { RatedMovies } from 'components/RatedMovies';
-import { SetTabFunc, SetValueToSearchFunc } from 'types/app';
+import { NoParamsVoidFunc, OutputGenresFunc, SetTabFunc, SetValueToSearchFunc } from 'types/app';
 import MovieService from 'services/movieService';
 import { AppContextInterface, GenresContext } from 'genres-context/genres-context';
 
@@ -33,25 +33,25 @@ export default class App extends Component<AppProps | AppState> {
     this.getResponseGenres();
   }
 
-  createGuestSessionId = (): void => {
+  createGuestSessionId: NoParamsVoidFunc = () => {
     this.service.createGuestSession().then((guestSessionId) => {
       const session = localStorage.sessionId ? localStorage.sessionId : guestSessionId;
       localStorage.setItem('sessionId', session);
     });
   };
 
-  syncRateMovies = (): void => {
+  syncRateMovies: NoParamsVoidFunc = () => {
     const ratedMovies = localStorage.myRatedMovies ? localStorage.myRatedMovies : JSON.stringify({});
     localStorage.setItem('myRatedMovies', ratedMovies);
   };
 
-  outputGenres = (array: []): void => {
+  outputGenres: OutputGenresFunc = (array) => {
     this.setState({
       genres: array,
     });
   };
 
-  getResponseGenres = (): void => {
+  getResponseGenres: NoParamsVoidFunc = () => {
     this.service
       .getGenres()
       .then((res) => this.outputGenres(res))
