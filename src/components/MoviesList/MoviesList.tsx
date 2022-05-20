@@ -56,7 +56,7 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
   }
 
   sendRequest: SendRequestFunc = (value, page = 1) => {
-    this.resetError();
+    this.reset();
     this.service
       .getMovies(value, page)
       .then(([response, totalResult]) => {
@@ -70,8 +70,9 @@ export default class MoviesList extends Component<MoviesListProps, MoviesListSta
       );
   };
 
-  resetError: NoParamsVoidFunc = () => {
+  reset: NoParamsVoidFunc = () => {
     this.setState({
+      loading: true,
       error: false,
       errorInfo: '',
     });
