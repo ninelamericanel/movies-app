@@ -13,8 +13,6 @@ import movieService from 'services/movieService';
 import { Spinner } from 'components/Spinner';
 import { MoviesItem } from 'components/MoviesItem';
 
-import './MoviesList.scss';
-
 type MoviesListState = {
   movies: ResponseType[] | [];
   totalResult: number;
