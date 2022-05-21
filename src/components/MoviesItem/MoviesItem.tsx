@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Pagination } from 'antd';
+import { ArrowUpOutlined } from '@ant-design/icons';
 import { format } from 'date-fns';
 
 import { Movie } from 'components/Movie';
@@ -11,6 +12,8 @@ import {
   ResponseType,
   TruncateTextFunc,
 } from 'types/app';
+
+import './MoviesItem.scss';
 
 interface MoviesItemsProps {
   movies: ResponseType[];
@@ -66,17 +69,29 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     );
   });
 
+  const autoScroll = (
+    <div className="view__autoscroll autoscroll">
+      <ArrowUpOutlined className="autoscroll__icon" />
+      <div className="autoscroll__text">
+        <p>Back to up</p>
+      </div>
+    </div>
+  );
+
   const viewPagination =
     totalResult > 20 ? (
-      <div className="view__pagination pagination">
-        <Pagination
-          onChange={(page) => (handleChangePage ? handleChangePage(page) : null)}
-          total={totalResult}
-          current={currentPage}
-          showSizeChanger={false}
-          pageSize={20}
-        />
-      </div>
+      <>
+        <div className="view__pagination pagination">
+          <Pagination
+            onChange={(page) => (handleChangePage ? handleChangePage(page) : null)}
+            total={totalResult}
+            current={currentPage}
+            showSizeChanger={false}
+            pageSize={20}
+          />
+        </div>
+        {autoScroll}
+      </>
     ) : null;
 
   return (
