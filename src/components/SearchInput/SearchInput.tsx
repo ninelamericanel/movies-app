@@ -22,6 +22,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ setValueToSearch, search }) =
       defaultValue={search}
       className="input"
       onChange={handleChange}
+      autoFocus
     ></input>
   );
 };
