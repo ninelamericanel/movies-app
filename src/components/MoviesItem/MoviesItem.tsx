@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Pagination } from 'antd';
-import { ArrowUpOutlined } from '@ant-design/icons';
 import { format } from 'date-fns';
 
 import { Movie } from 'components/Movie';
@@ -69,15 +68,6 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
     );
   });
 
-  const autoScroll = (
-    <div className="view__autoscroll autoscroll">
-      <ArrowUpOutlined className="autoscroll__icon" />
-      <div className="autoscroll__text">
-        <p>Back to up</p>
-      </div>
-    </div>
-  );
-
   const viewPagination =
     totalResult > 20 ? (
       <>
@@ -90,7 +80,6 @@ const MoviesItem: FC<MoviesItemsProps> = ({ handleChangePage, currentPage, total
             pageSize={20}
           />
         </div>
-        {autoScroll}
       </>
     ) : null;
 
